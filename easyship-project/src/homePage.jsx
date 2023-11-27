@@ -1,0 +1,29 @@
+import Navbar from './navbar.jsx';
+import Hero from './hero.jsx';
+import Features from './features.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Couriers from './couriers.jsx';
+import Pricing from './pricing.jsx';
+import Footer from './footer.jsx';
+function HomePage()
+{
+return(
+<>
+<div>
+<Navbar />
+      <Hero />
+      <Features />
+      <Couriers />
+      <Pricing />
+      <Footer /> 
+      </div>
+
+</>
+
+)
+
+
+
+
+}
+export default HomePage;
