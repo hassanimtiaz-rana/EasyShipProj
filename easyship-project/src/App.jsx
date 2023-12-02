@@ -11,6 +11,7 @@ import Pricing from './pricing.jsx';
 import Footer from './footer.jsx';
 import SignIn from './SignInPage.jsx';
 import SignUp from './SignUp';
+import UserLanding from './userLanding.jsx';
 
 
 function App() {
@@ -26,11 +27,13 @@ function App() {
       {/* <Navbar/> */}
       
       <Routes>
-        <Route path="/" element={<HomePage />}/>
+        <Route path="/" element={<HomePage/>}/>
         <Route path="/HomePage" element={<HomePage />}/>
         <Route path="/SignIn" element={<SignIn />}/>
         <Route path="/SignUp" element={<SignUp />}/>
+        <Route path="/userLanding" element={<UserLanding />}/>
 
+        
 
 
         {/* <Route path="/price" element={<Pricing />}/>
