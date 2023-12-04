@@ -13,7 +13,7 @@ const couriers = [
 
 function Couriers() {
   return (
-    <div className="p-4">
+    <div className="p-4" id='courier'>
       <div className="mx-auto flex max-w-[70rem] flex-col justify-center rounded-2xl bg-orange-500 bg-opacity-5 px-4 text-orange-500 dark:bg-opacity-20 md:h-[300px] lg:h-[400px] relative border-4 border-orange-500">
         <div className="pointer-events-none absolute left-0 top-0 z-[-1] h-full w-full rounded-xl bg-white dark:bg-black"></div>
         <h1 className="mb-2 text-center text-4xl font-bold pb-8">Couriers Associated With Us</h1>

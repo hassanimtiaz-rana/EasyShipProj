@@ -12,6 +12,7 @@ import Footer from './footer.jsx';
 import SignIn from './SignInPage.jsx';
 import SignUp from './SignUp';
 import UserLanding from './userLanding.jsx';
+import { HashLink as Link } from 'react-router-hash-link';
 
 
 function App() {
@@ -34,10 +35,10 @@ function App() {
         <Route path="/userLanding" element={<UserLanding />}/>
 
         
-
-
-        {/* <Route path="/price" element={<Pricing />}/>
-        <Route path="/Feature" element={<Features />}/> */}
+        {/* <Route path="/aboutus" element={<Footer />}/>
+        <Route path="/courier" element={<Couriers />}/>
+        <Route path="/price" element={<Pricing />}/>
+        <Route path="/feature" element={<Features />}/> */}
        
       </Routes>
     </div>

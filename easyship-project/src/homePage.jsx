@@ -9,7 +9,7 @@ function HomePage()
 {
 return(
 <>
-<div>
+<div id='home'>
 <Navbar />
       <Hero />
       <Features />

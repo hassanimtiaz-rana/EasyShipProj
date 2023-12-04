@@ -1,10 +1,11 @@
 import easyShipLogo from './images/easyShipLogo.png';
-// Navbar component
+import { HashLink as Link } from 'react-router-hash-link';
+//Navbar component
 
 function Navbar() {
   return (
     <>
-      <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+      <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900 fixed top-0 left-0 right-0 z-10">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
           <a href="#" className="flex items-center">
             <img src={easyShipLogo} className="h-20 mr-3 sm:h-20" alt="EasyShip Logo" />
@@ -53,19 +54,19 @@ function Navbar() {
           <div className="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-                <a href="/HomePage" className="nav-link">Home</a>
+              <Link smooth to="/#home" className="nav-link">Home</Link>
               </li>
               <li>
-                <a href="#" className="nav-link">Features</a>
+              <Link smooth to="/#feature" className="nav-link">Features</Link>
               </li>
               <li>
-                <a href="#" className="nav-link">Couriers</a>
+              <Link smooth to="/#courier" className="nav-link">Couriers</Link>
               </li>
               <li>
-                <a href="#" className="nav-link">Pricing</a>
+              <Link smooth to="/#price" className="nav-link">Pricing</Link>
               </li>
               <li>
-                <a href="#" className="nav-link">About Us</a>
+                <a href="/aboutus" className="nav-link">About Us</a>
               </li>
               <li>
                 <a href="#" className="nav-link">Contact</a>
