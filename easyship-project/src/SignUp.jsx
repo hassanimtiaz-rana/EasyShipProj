@@ -1,4 +1,5 @@
 import signUp from './images/signUp.jpeg'
+// signup component
 function SignUp()
 {
 return(
