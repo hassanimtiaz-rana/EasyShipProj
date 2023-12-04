@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <>
-   <footer class="flex flex-col space-y-10 justify-center m-10">
+   <footer class="flex flex-col space-y-10 justify-center m-10" id='contact'>
 
 <nav class="flex justify-center flex-wrap gap-6 text-gray-500 font-medium">
     <a class="hover:text-orange-600" href="#">Home</a>

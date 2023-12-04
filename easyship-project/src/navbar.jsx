@@ -66,10 +66,10 @@ function Navbar() {
               <Link smooth to="/#price" className="nav-link">Pricing</Link>
               </li>
               <li>
-                <a href="/aboutus" className="nav-link">About Us</a>
+                <a href="#" className="nav-link">About Us</a>
               </li>
               <li>
-                <a href="#" className="nav-link">Contact</a>
+                <a href="/#contact" className="nav-link">Contact</a>
               </li>
             </ul>
           </div>
