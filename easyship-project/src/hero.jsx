@@ -1,5 +1,6 @@
 import React from 'react';
 import landingImg from './images/landingImg.jpeg';
+// Hero Section
 function Hero() {
   return (
     <section className="sm:mt-6 lg:mt-8 mt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
