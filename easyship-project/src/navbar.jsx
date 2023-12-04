@@ -1,5 +1,5 @@
 import easyShipLogo from './images/easyShipLogo.png';
-
+// Navbar component
 
 function Navbar() {
   return (
