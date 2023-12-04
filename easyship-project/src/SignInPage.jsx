@@ -1,4 +1,5 @@
 import signIn from './images/signIn.jpeg'
+// signin page component
 function SignInPage()
 {
 return(
