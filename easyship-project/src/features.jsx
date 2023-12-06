@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWarehouse, faClock, faBox, faChartBar } from '@fortawesome/free-solid-svg-icons';
+// features component
 
 function renderFeature(title, content, icon) {
   return (
