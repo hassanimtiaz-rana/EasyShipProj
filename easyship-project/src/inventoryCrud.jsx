@@ -45,7 +45,8 @@ function InventoryCrud()
     },[])
     const handleEdit=(id)=>{
 
-      alert(id);
+      //alert(id);
+      handleShow();
     }
     const handleDelete=(id)=>{
       if(window.confirm("Are You Sure to Delete?" )==true)
@@ -97,6 +98,20 @@ return(
         
       </tbody>
     </Table>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update/ Modify Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Fragment>
     
     
