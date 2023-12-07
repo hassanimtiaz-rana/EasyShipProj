@@ -2,7 +2,9 @@ import React, { useState,useEffect, Fragment } from "react";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function InventoryCrud()
 {
@@ -10,6 +12,16 @@ function InventoryCrud()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const[name,setName]=useState('');
+  const[age,setAge]=useState('');
+  const[isActive,setIsActive]=useState(0);
+
+  const[editId,setEditId]=useState('');
+  const[editName,setEditName]=useState('');
+  const[editAge,setEditAge]=useState('');
+  const[editIsActive,setEditIsActive]=useState(0);
+
+
     const empdata=[
        {
        emp_id:1,
@@ -57,9 +69,33 @@ function InventoryCrud()
 
       
     }
+    const handleUpdate=()=>{
+
+    }
 return(
     <>
     <Fragment>
+    <Container>
+      
+      <Row>
+        <Col>
+        <input type="text" className="form-control" placeholder="Enter Name" value={name} 
+        onChange={(e)=>setName(e.target.value)}
+        />
+        </Col>
+        <Col><input type="text" className="form-control" placeholder="Enter Age" value={age}
+        onChange={(e)=>setAge(e.target.value)}
+        /></Col>
+        <Col><input type="checkbox" checked={isActive === 1 ? true : false}
+        onChange={(e)=>setIsActive(e)} value={isActive}
+        />
+        <label >isActive</label></Col>
+        <Col>
+        <button className="btn btn-primary">Submit</button>
+        </Col>
+      </Row>
+    </Container>
+    <br></br>
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -102,14 +138,33 @@ return(
         <Modal.Header closeButton>
           <Modal.Title>Update/ Modify Product</Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body><Container>
+      
+      <Row>
+      <Col>
+        <input type="text" className="form-control" placeholder="Enter Name" value={editName} 
+        onChange={(e)=>setEditName(e.target.value)}
+        />
+        </Col>
+        <Col><input type="text" className="form-control" placeholder="Enter Age" value={editAge}
+        onChange={(e)=>setEditAge(e.target.value)}
+        /></Col>
+        <Col><input type="checkbox" checked={editIsActive === 1 ? true : false}
+        onChange={(e)=>setEditIsActive(e)} value={editIsActive}
+        />
+        <label >isActive</label></Col>
+        <Col>
+        <button className="btn btn-primary">Submit</button>
+        </Col>
+      </Row>
+    </Container></Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button className="btn btn-secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
+          </button>
+          <button className="btn btn-primary" onClick={handleUpdate}>
             Save Changes
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </Fragment>
