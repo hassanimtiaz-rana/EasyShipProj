@@ -1,8 +1,15 @@
 import React, { useState,useEffect, Fragment } from "react";
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 
 function InventoryCrud()
 {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
     const empdata=[
        {
        emp_id:1,
@@ -36,6 +43,19 @@ function InventoryCrud()
 
 
     },[])
+    const handleEdit=(id)=>{
+
+      alert(id);
+    }
+    const handleDelete=(id)=>{
+      if(window.confirm("Are You Sure to Delete?" )==true)
+      {
+        alert(id);
+
+      }
+
+      
+    }
 return(
     <>
     <Fragment>
@@ -47,6 +67,7 @@ return(
           <th>Name</th>
           <th>Age</th>
           <th>Is Active</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -60,6 +81,11 @@ return(
                     <td>{item.emp_name}</td>
                     <td>{item.emp_age}</td>
                     <td>{item.is_Active}</td>
+                    <td colSpan={2}>
+                      <button className="btn btn-primary" onClick={()=>handleEdit(item.emp_id)}>Edit</button> &nbsp;
+                      <button className="btn btn-danger" onClick={()=>handleDelete(item.emp_id)}>Delete</button>
+
+                    </td>
                     </tr>
 
                 )
