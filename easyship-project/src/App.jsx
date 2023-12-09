@@ -14,9 +14,8 @@ import SignUp from './SignUp';
 import UserLanding from './userLanding.jsx';
 import { HashLink as Link } from 'react-router-hash-link';
 import InventoryCrud from './inventoryCrud.jsx';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import CrudInventory from './crudInventory.jsx';
 
 
 function App() {
@@ -37,7 +36,7 @@ function App() {
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signUp" element={<SignUp />}/>
         <Route path="/userLanding" element={<UserLanding />}/>
-        <Route path="/inventory" element={<InventoryCrud />}/>
+        <Route path="/inventory" element={<CrudInventory />}/>
 
 
         

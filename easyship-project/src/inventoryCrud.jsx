@@ -5,6 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import axios from "axios";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 function InventoryCrud()
 {
@@ -12,9 +15,9 @@ function InventoryCrud()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const[name,setName]=useState('');
-  const[age,setAge]=useState('');
-  const[isActive,setIsActive]=useState(0);
+  const[Name,setName]=useState('');
+  const[Age,setAge]=useState('');
+  const[IsActive,setIsActive]=useState(0);
 
   const[editId,setEditId]=useState('');
   const[editName,setEditName]=useState('');
@@ -49,49 +52,160 @@ function InventoryCrud()
             }
 
     ]
-    const [data,setdata]=useState([]);
-    useEffect(()=>{
-        setdata(empdata)
+    const [data, setData] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+   const getData = () => {
+  axios.get('https://localhost:7279/api/Employee')
+    .then((result) => {
+      setData(result.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-
-    },[])
     const handleEdit=(id)=>{
-
       //alert(id);
       handleShow();
+      axios.get(`https://localhost:7279/api/Employee/${id}`)
+      .then((result) => {
+        setEditName(result.data.name)
+        setEditAge(result.data.age)
+        setEditIsActive(result.data.isActive)
+        setEditId(id)
+
+
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+
     }
-    const handleDelete=(id)=>{
-      if(window.confirm("Are You Sure to Delete?" )==true)
-      {
-        alert(id);
+    const handleDelete = (id) => {
+      if (window.confirm("Are You Sure to Delete?")) {
+        axios.delete(`https://localhost:7279/api/Employee/${id}`)
+          .then((result) => {
+            if (result.status === 200) {
+              toast.success('Employee Has been Deleted');
+              getData(); // Assuming getData fetches updated employee list
+            }
+          })
+          .catch((error) => {
+            toast.error(error);
+          });
+      }
+    };
+    
+    const handleUpdate=()=>{
+    const url= ` https://localhost:7279/api/Employee/${editId}`
+    const data={
+      "id": editId,
+      "name": editName,
+      "age": editAge,
+      "isActive": editIsActive
+    
+  }
+  axios.put(url,data)
+  .then((result)=>{
+    handleClose();
+    toast.success('Employee Has been Updated');
+    getData();
+    clear();
+    
+
+
+  })
+  .catch((error)=>{
+   toast.error(error);
+
+  });
+     
+    }
+    const handlSave=()=>{
+      const url='https://localhost:7279/api/Employee';
+      const data={
+        
+          "name": Name,
+          "age": Age,
+          "isActive": IsActive
+        
+      }
+      axios.post(url,data)
+      .then((result)=>{
+        getData();
+        clear();
+        toast.success('Employee Has been added');
+
+
+      })
+      .catch((error)=>{
+       toast.error(error);
+
+      });
+      
+      const clear=()=>{
+        setName('');
+        setAge('');
+        setIsActive(0);
+        setEditName('');
+        setEditAge('');
+        setEditIsActive(0);
+        setEditId('');
+
+
+
+
+
 
       }
 
-      
+
+
+
     }
-    const handleUpdate=()=>{
+    const handleIsActive=(e)=>{
+      if(e.target.checked){
+        setIsActive(1);
+      }
+      else{
+        setIsActive(0);
+      }
+
+
+    }
+    const handleEditActive=(e)=>{
+      if(e.target.checked){
+        setEditIsActive(1);
+      }
+      else{
+        setEditIsActive(0);
+      }
+
 
     }
 return(
     <>
+    <ToastContainer/>
     <Fragment>
     <Container>
       
       <Row>
         <Col>
-        <input type="text" className="form-control" placeholder="Enter Name" value={name} 
+        <input type="text" className="form-control" placeholder="Enter Name" value={Name} 
         onChange={(e)=>setName(e.target.value)}
         />
         </Col>
-        <Col><input type="text" className="form-control" placeholder="Enter Age" value={age}
+        <Col><input type="text" className="form-control" placeholder="Enter Age" value={Age}
         onChange={(e)=>setAge(e.target.value)}
         /></Col>
-        <Col><input type="checkbox" checked={isActive === 1 ? true : false}
-        onChange={(e)=>setIsActive(e)} value={isActive}
+        <Col><input type="checkbox" checked={IsActive === 1 ? true : false}
+        onChange={(e)=>handleIsActive(e)} value={IsActive}
         />
         <label >isActive</label></Col>
         <Col>
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary" onClick={()=>handlSave()}>Submit</button>
         </Col>
       </Row>
     </Container>
@@ -114,13 +228,13 @@ return(
                 return(
                     <tr key={index}>
                     <td>{index+1}</td>
-                    <td>{item.emp_id}</td>
-                    <td>{item.emp_name}</td>
-                    <td>{item.emp_age}</td>
-                    <td>{item.is_Active}</td>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.age}</td>
+                    <td>{item.isActive}</td>
                     <td colSpan={2}>
-                      <button className="btn btn-primary" onClick={()=>handleEdit(item.emp_id)}>Edit</button> &nbsp;
-                      <button className="btn btn-danger" onClick={()=>handleDelete(item.emp_id)}>Delete</button>
+                      <button className="btn btn-primary" onClick={()=>handleEdit(item.id)}>Edit</button> &nbsp;
+                      <button className="btn btn-danger" onClick={()=>handleDelete(item.id)}>Delete</button>
 
                     </td>
                     </tr>
@@ -150,7 +264,7 @@ return(
         onChange={(e)=>setEditAge(e.target.value)}
         /></Col>
         <Col><input type="checkbox" checked={editIsActive === 1 ? true : false}
-        onChange={(e)=>setEditIsActive(e)} value={editIsActive}
+        onChange={(e)=>handleEditActive(e)} value={editIsActive}
         />
         <label >isActive</label></Col>
         <Col>
