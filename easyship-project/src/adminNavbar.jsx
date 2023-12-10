@@ -20,16 +20,16 @@ function AdminNavbar() {
             <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
              
               <li>
-              <a href="#" className="nav-link">Dashboard</a>
+              <a href="/adminDashboard" className="nav-link">Dashboard</a>
               </li>
               <li>
-              <a href="#" className="nav-link">Manage Users</a>
+              <a href="/manageUsers" className="nav-link">Manage Users</a>
               </li>
               <li>
-              <a href="#" className="nav-link">Manage Complaints</a>
+              <a href="/manageComplaints" className="nav-link">Manage Complaints</a>
               </li>
               <li>
-                <a href="#" className="nav-link">Manage Couriers</a>
+                <a href="/manageCouriers" className="nav-link">Manage Couriers</a>
               </li>
              
             </ul>
