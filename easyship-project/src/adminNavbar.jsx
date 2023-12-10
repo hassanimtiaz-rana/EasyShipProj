@@ -1,7 +1,7 @@
 import easyShipLogo from './images/easyShipLogo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 
-function NavbarUser() {
+function AdminNavbar() {
   return (
     <>
       <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900 fixed top-0 left-0 right-0 z-10">
@@ -31,9 +31,7 @@ function NavbarUser() {
               <li>
                 <a href="#" className="nav-link">Manage Couriers</a>
               </li>
-              <li>
-                <a href="#" className="nav-link">Help</a>
-              </li>
+             
             </ul>
           </div>
         </div>
@@ -63,4 +61,4 @@ function NavbarUser() {
   );
 }
 
-export default NavbarUser;
+export default AdminNavbar;
