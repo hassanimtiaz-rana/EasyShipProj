@@ -41,7 +41,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />}/>
         <Route path="/userPage" element={<UserLanding />}/>
         <Route path="/inventory" element={<CrudInventory />}/>
-        <Route path="/admin" element={<AdminDashboard />}/>
+        <Route path="/adminDashboard" element={<AdminDashboard />}/>
         <Route path="/manageUsers" element={<ManageUsers />}/>
         <Route path="/manageCouriers" element={<ManageCouriers />}/>
         <Route path="/manageComplaints" element={<ManageComplaints />}/>
