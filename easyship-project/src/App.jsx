@@ -16,6 +16,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import InventoryCrud from './inventoryCrud.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CrudInventory from './crudInventory.jsx';
+import AdminDashboard from './adminDashboard.jsx';
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
         <Route path="/signUp" element={<SignUp />}/>
         <Route path="/userPage" element={<UserLanding />}/>
         <Route path="/inventory" element={<CrudInventory />}/>
+        <Route path="/admin" element={<AdminDashboard />}/>
+
 
 
         
