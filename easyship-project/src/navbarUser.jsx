@@ -1,6 +1,5 @@
 import easyShipLogo from './images/easyShipLogo.png';
 import { HashLink as Link } from 'react-router-hash-link';
-//Navbar component
 
 function NavbarUser() {
   return (
@@ -15,21 +14,21 @@ function NavbarUser() {
             <div className="hidden mt-2 mr-4 sm:inline-block">
               <span></span>
             </div>
-            
           </div>
           <div className="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            {/* Use Tailwind responsive classes to show/hide based on screen size */}
+            <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-              <Link smooth to="#" className="nav-link">Inventory</Link>
+                <Link smooth to="#" className="nav-link">Inventory</Link>
               </li>
               <li>
-              <Link smooth to="#" className="nav-link">Dashboard</Link>
+                <Link smooth to="#" className="nav-link">Dashboard</Link>
               </li>
               <li>
-              <Link smooth to="#" className="nav-link">Orders</Link>
+                <Link smooth to="#" className="nav-link">Orders</Link>
               </li>
               <li>
-              <Link smooth to="#" className="nav-link">Payments</Link>
+                <Link smooth to="#" className="nav-link">Payments</Link>
               </li>
               <li>
                 <a href="#" className="nav-link">Reports</a>
@@ -52,6 +51,13 @@ function NavbarUser() {
           .nav-link:hover,
           .nav-link:focus {
             color: #FFA500;
+          }
+
+          /* Hide the menu on small screens */
+          @media (max-width: 640px) {
+            .lg\:hidden {
+              display: none;
+            }
           }
         `}
       </style>
