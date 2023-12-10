@@ -135,7 +135,7 @@ function Pricing() {
                 <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Best for large scale uses and
                     Enterprises.</p>
                 <div class="flex items-baseline justify-center my-8">
-                    <span class="mr-2 text-5xl font-extrabold">600 pkr</span>
+                    <span class="mr-2 text-5xl font-extrabold">6000 pkr</span>
                     <span class="text-gray-500 dark:text-gray-400">/month</span>
                 </div>
 

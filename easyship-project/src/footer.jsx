@@ -1,4 +1,5 @@
 import React from "react";
+import { HashLink as Link } from 'react-router-hash-link';
 
 function Footer() {
   return (
@@ -6,12 +7,13 @@ function Footer() {
    <footer class="flex flex-col space-y-10 justify-center m-10" id='contact'>
 
 <nav class="flex justify-center flex-wrap gap-6 text-gray-500 font-medium">
-    <a class="hover:text-orange-600" href="#">Home</a>
-    <a class="hover:text-orange-600" href="#">Features</a>
-    <a class="hover:text-orange-600" href="#">Couriers</a>
-    <a class="hover:text-orange-600" href="#">Pricing</a>
-    <a class="hover:text-orange-600" href="#">About Us</a>
-    <a class="hover:text-orange-600" href="#">Contact</a>
+<Link smooth to="/#home" className="hover:text-orange-600">Home</Link>
+<Link smooth to="/#feature" className="hover:text-orange-600">Features</Link>
+<Link smooth to="/#courier" className="hover:text-orange-600">Couriers</Link>
+<Link smooth to="/#price" className="hover:text-orange-600">Pricing</Link>
+<Link smooth to="/#aboutUs" className="hover:text-orange-600">About Us</Link>
+<Link smooth to="/#contact" className="hover:text-orange-600">Contact</Link>
+
 </nav>
 
 <div class="flex justify-center space-x-5">
