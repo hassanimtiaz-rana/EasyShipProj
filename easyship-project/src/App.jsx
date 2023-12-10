@@ -35,7 +35,7 @@ function App() {
         <Route path="/HomePage" element={<HomePage />}/>
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signUp" element={<SignUp />}/>
-        <Route path="/userLanding" element={<UserLanding />}/>
+        <Route path="/userPage" element={<UserLanding />}/>
         <Route path="/inventory" element={<CrudInventory />}/>
 
 
