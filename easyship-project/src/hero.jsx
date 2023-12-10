@@ -14,18 +14,20 @@ function Hero() {
           “Easy Ship” aims to introduce automation into order tracking, replacing the need for manual data entry and record-keeping. It is a centralized hub where user can find different couriers for delivery. The system will automatically choose the best courier by considering various factors which will make e-commerce store smooth, fast and reliable
           </p>
           {/* Button Section */}
+          
           <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-            <div className="rounded-md shadow">
-              <a href="/signUp" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 md:py-4 md:text-lg md:px-10">
-                Get started
-              </a>
-            </div>
-            <div className="mt-3 sm:mt-0 sm:ml-3">
-              <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-800 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10">
-                Demo Video
-              </a>
-            </div>
-          </div>
+  <div className="rounded-md shadow">
+    <a href="/signUp" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 md:py-4 md:text-lg md:px-10">
+      Get started
+    </a>
+  </div>
+  <div className="mt-3 sm:mt-0 sm:ml-3">
+    <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-800 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10">
+      Demo Video
+    </a>
+    
+  </div>
+</div>
           {/* End of Button Section */}
         </div>
         {/* Image Section */}
