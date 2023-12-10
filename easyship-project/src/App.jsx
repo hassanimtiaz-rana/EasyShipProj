@@ -17,6 +17,9 @@ import InventoryCrud from './inventoryCrud.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CrudInventory from './crudInventory.jsx';
 import AdminDashboard from './adminDashboard.jsx';
+import ManageUsers from './manageUsers.jsx';
+import ManageCouriers from './manageCouriers.jsx';
+import ManageComplaints from './manageComplaints.jsx';
 
 
 function App() {
@@ -39,6 +42,13 @@ function App() {
         <Route path="/userPage" element={<UserLanding />}/>
         <Route path="/inventory" element={<CrudInventory />}/>
         <Route path="/admin" element={<AdminDashboard />}/>
+        <Route path="/manageUsers" element={<ManageUsers />}/>
+        <Route path="/manageCouriers" element={<ManageCouriers />}/>
+        <Route path="/manageComplaints" element={<ManageComplaints />}/>
+
+
+
+        
 
 
 
