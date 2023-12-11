@@ -1,4 +1,4 @@
-import signIn from './images/signIn.jpeg'
+import signIn from './signIn.jpeg'
 // signin page component
 function SignInPage()
 {

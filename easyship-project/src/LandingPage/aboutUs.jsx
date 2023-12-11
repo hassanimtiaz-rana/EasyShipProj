@@ -1,6 +1,6 @@
 import React from 'react';
-import aboutUsImage from './images/aboutus.jpeg';
-import signup from './images/signUp.jpeg'
+import aboutUsImage from './aboutus.jpeg';
+import signup from './signUp.jpeg'
 
 function AboutUs() {
   return (

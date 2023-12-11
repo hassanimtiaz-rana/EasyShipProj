@@ -1,5 +1,5 @@
 import React from 'react';
-import landingImg from './images/landingImg.jpeg';
+import landingImg from './landingImg.jpeg';
 // Hero Section
 function Hero() {
   return (

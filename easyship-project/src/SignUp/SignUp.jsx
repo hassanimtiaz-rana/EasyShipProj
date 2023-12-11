@@ -1,4 +1,4 @@
-import signUp from './images/signUp.jpeg'
+import signUp from './signUp.jpeg'
 // signup component
 function SignUp()
 {

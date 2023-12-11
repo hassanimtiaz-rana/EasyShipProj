@@ -1,4 +1,4 @@
-import easyShipLogo from './images/easyShipLogo.png';
+import easyShipLogo from './easyShipLogo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 //Navbar component
 

@@ -1,7 +1,9 @@
-import easyShipLogo from './images/easyShipLogo.png';
+import easyShipLogo from './easyShipLogo.png';
+
+
 import { HashLink as Link } from 'react-router-hash-link';
 
-function NavbarUser() {
+function AdminNavbar() {
   return (
     <>
       <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900 fixed top-0 left-0 right-0 z-10">
@@ -18,24 +20,20 @@ function NavbarUser() {
           <div className="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
             {/* Use Tailwind responsive classes to show/hide based on screen size */}
             <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+             
               <li>
-                <Link smooth to="#" className="nav-link">Inventory</Link>
+              <a href="/adminDashboard" className="nav-link">Dashboard</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Dashboard</Link>
+              <a href="/manageUsers" className="nav-link">Manage Users</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Orders</Link>
+              <a href="/manageComplaints" className="nav-link">Manage Complaints</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Payments</Link>
+                <a href="/manageCouriers" className="nav-link">Manage Couriers</a>
               </li>
-              <li>
-                <a href="#" className="nav-link">Reports</a>
-              </li>
-              <li>
-                <a href="#" className="nav-link">Help</a>
-              </li>
+             
             </ul>
           </div>
         </div>
@@ -65,4 +63,4 @@ function NavbarUser() {
   );
 }
 
-export default NavbarUser;
+export default AdminNavbar;
