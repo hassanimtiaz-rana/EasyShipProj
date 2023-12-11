@@ -1,22 +1,47 @@
-import signUp from './signUp.jpeg'
+import React from 'react';
+import Lottie from 'react-lottie';
+import animationData from './data.json';
+import animationData2 from './data2.json';
+
 // signup component
 function SignUp()
 {
+	const defaultOptions = {
+		loop: true,
+		autoplay: true,
+		animationData: animationData,
+		rendererSettings: {
+		  preserveAspectRatio: 'xMidYMid slice'
+		}
+	  };
+	  const defaultOptions2 = {
+		loop: true,
+		autoplay: true,
+		animationData: animationData2,
+		rendererSettings: {
+		  preserveAspectRatio: 'xMidYMid slice'
+		}
+	  };
+	
 return(
 <>
 {/* <!-- source: https://gist.github.com/nraloux/bce10c4148380061781b928cdab9b193 --> */}
 {/* <!-- I have added support for dark mode and improved UI --> */}
 
-<div class="h-full bg-white dark:bg-gray-900">
-	{/* <!-- Container --> */}
-	<div class="mx-auto">
-		<div class="flex justify-center px-6 py-12">
-			{/* <!-- Row --> */}
-			<div class="w-full xl:w-3/4 lg:w-11/12 flex">
-				{/* <!-- Col --> */}
-				<div class="w-full h-auto bg-white dark:bg-white hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-         style={{ backgroundImage: `url(${signUp})` }}> 
-          </div>
+<div className="h-full bg-white dark:bg-gray-900">
+      <div className="mx-auto">
+        <div className="flex justify-center px-6 py-12">
+          <div className="w-full xl:w-3/4 lg:w-11/12 flex">
+            <div className="w-full h-auto bg-white dark:bg-white hidden lg:block lg:w-5/12 bg-cover rounded-l-lg">
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+
+              <Lottie options={defaultOptions} height={400} width={400} />
+			  
+            </div>
 				{/* <!-- Col --> */}
 				<div class="w-full lg:w-7/12 bg-white dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
 					<h3 class="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
