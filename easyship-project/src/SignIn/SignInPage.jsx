@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import signInImage from './signIn.jpeg';
+// import jwt_decode from 'jwt-decode';
+
 
 
 function SignInPage() {
@@ -21,13 +23,18 @@ function SignInPage() {
 
         axios.post(url, data)
             .then((response) => {
+               
+                
                 console.log('Logged in:', response.data);
+                    
                 toast.success('Login successful!');
                 console.log('Before redirection');
-                navigate({
-                    pathname: '/inventory',
-                    state: { username: email } // Pass the username as a prop
-                });
+                // navigate('/inventory');
+                if (email === 'admin' && password === 'admin') {
+                    navigate('/adminDashboard'); // Redirect to the admin dashboard
+                } else {
+                    navigate('/inventory', { state: { email } }); // Redirect to the inventory page for regular users
+                }
                 //  navigate('/inventory');
                  console.log('After redirection');
                // history.push('/inventory');

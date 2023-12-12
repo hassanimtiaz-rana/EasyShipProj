@@ -6,7 +6,7 @@ function NavbarUser() {
     <>
       <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900 fixed top-0 left-0 right-0 z-10">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
-          <a href="#" className="flex items-center">
+          <a href="" className="flex items-center">
             <img src={easyShipLogo} className="h-20 mr-3 sm:h-20" alt="EasyShip Logo" />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Easy Ship</span>
           </a>
@@ -19,22 +19,23 @@ function NavbarUser() {
             {/* Use Tailwind responsive classes to show/hide based on screen size */}
             <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-                <Link smooth to="#" className="nav-link">Inventory</Link>
+              <a  className="nav-link">Inventory</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Dashboard</Link>
+              <a  className="nav-link">Dashboard</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Orders</Link>
+              <a  className="nav-link">Orders</a>
               </li>
               <li>
-                <Link smooth to="#" className="nav-link">Payments</Link>
+              <a  className="nav-link">Payments</a>
+
               </li>
               <li>
-                <a href="#" className="nav-link">Reports</a>
+                <a  className="nav-link">Reports</a>
               </li>
               <li>
-                <a href="#" className="nav-link">Help</a>
+                <a  className="nav-link">Help</a>
               </li>
             </ul>
           </div>

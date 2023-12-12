@@ -34,7 +34,8 @@ namespace easyShipBackend.Migrations
                     productName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     productPrice = table.Column<int>(type: "int", nullable: false),
                     productQuantity = table.Column<int>(type: "int", nullable: false),
-                    productCatagory = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    productCatagory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

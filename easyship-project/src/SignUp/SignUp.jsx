@@ -104,13 +104,13 @@ function SignUp() {
                                 </button>
                             </div>
                             <hr className="mb-6 border-t" />
-                            <div className="text-center">
+                            {/* <div className="text-center">
                                 <a className="inline-block text-sm text-orange-500 dark:text-blue-500 align-baseline hover:text-orange-800" href="#">
                                     Forgot Password?
                                 </a>
-                            </div>
+                            </div> */}
                             <div className="text-center">
-                                <a className="inline-block text-sm text-orange-500 dark:text-blue-500 align-baseline hover:text-orange-800" href="./index.html">
+                                <a className="inline-block text-sm text-orange-500 dark:text-blue-500 align-baseline hover:text-orange-800" href="/signIn">
                                     Already have an account? Login!
                                 </a>
                             </div>

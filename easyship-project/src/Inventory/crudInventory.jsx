@@ -9,8 +9,12 @@ import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import NavbarUser from "./navbarUser";
+import { useLocation } from 'react-router-dom';
 function CrudInventory()
 {
+  const location = useLocation();
+    const email = location.state ? location.state.email : null;
+
     const [show, setShow] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
   const categories = ["Gaming", "Home Appliances", "TV"];
@@ -31,38 +35,7 @@ function CrudInventory()
   const[editProductQuantity,setEditProductQuantity]=useState('');
   const[editProductCatagory,setEditProductCatagory]=useState('');
 
-  const productData=[
-    {
-        
-
-    id:1,
-    productName: 'Playstation 5',
-    productQuantity: 20,
-    productPrice:100,
-    productCatagory: 'Gaming'
-
-
-    },
-    {
-        id:2,
-        productName: 'Washing Machine',
-        productQuantity: 20,
-        productPrice:100,
-        productCatagory: 'Home Appliances'
-
-
-     },
-     {
-        id:3,
-        productName: 'Lcd',
-        productQuantity: 20,
-        productPrice:100,
-        productCatagory: 'TV'
-  
-  
-         }
-
- ]
+ 
  
  const [data, setData] = useState([]);
  useEffect(() => {
@@ -86,6 +59,10 @@ const filteredData = data.filter((item) => {
     item.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.productCatagory.toLowerCase().includes(searchQuery.toLowerCase())
   );
+});
+const filteredInventoryData = data.filter((item) => {
+
+  return item.username === email;
 });
 
 const handleEdit=(id)=>{
@@ -128,7 +105,8 @@ const handleEdit=(id)=>{
     "productName": editProductName,
     "productPrice": editProductPrice,
     "productQuantity": editProductQuantity,
-    "productCatagory": editProductCatagory
+    "productCatagory": editProductCatagory,
+    "username":email
   
 }
 axios.put(url,data)
@@ -155,7 +133,8 @@ axios.put(url,data)
         "productName": productName,
         "productPrice": productPrice,
         "productQuantity": productQuantity,
-        "productCatagory": productCatagory
+        "productCatagory": productCatagory,
+        "username":email
       
     }
     axios.post(url,data)
@@ -245,7 +224,7 @@ return(
       <br></br>
       <br></br>
       <br></br>
-      
+            {email && <p>Username: {email}</p>}
       <Row>
     <Col>
       <input
@@ -306,8 +285,8 @@ return(
       </thead>
       <tbody>
         {
-            currentRecords.length > 0   ?
-            currentRecords.map((item,index)=>{
+            filteredInventoryData.length > 0   ?
+            filteredInventoryData.map((item, index)=>{
                 return(
                   
                   <tr>
@@ -333,19 +312,7 @@ return(
         
       </tbody>
     </Table>
-    <div className="d-flex justify-content-center mt-3">
-    <nav>
-        <ul className="pagination">
-          {pageNumbers.map((number) => (
-            <li key={number} className="page-item">
-              <a onClick={() => paginate(number)} href="#" className="page-link">
-                {number}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+   
    
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

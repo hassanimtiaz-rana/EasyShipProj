@@ -8,5 +8,7 @@
         public int productQuantity { get; set; }
 
         public string? productCatagory { get; set; }
+        public string? Username { get; set; }
+
     }
 }

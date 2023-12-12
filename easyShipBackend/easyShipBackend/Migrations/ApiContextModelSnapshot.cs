@@ -51,6 +51,9 @@ namespace easyShipBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("productCatagory")
                         .HasColumnType("nvarchar(max)");
 

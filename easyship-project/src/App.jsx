@@ -20,27 +20,24 @@ import AdminDashboard from './admin/adminDashboard.jsx';
 import ManageUsers from './admin/manageUsers.jsx';
 import ManageCouriers from './admin/manageCouriers.jsx';
 import ManageComplaints from './admin/manageComplaints.jsx';
+import Protected from './Protected.jsx';
 
 
 function App() {
   return (
     <div>
-      {/* <Navbar />
-      <Hero />
-      <Features />
-      <Couriers />
       
-      <Pricing />
-      <Footer /> */}
-      {/* <Navbar/> */}
       
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/HomePage" element={<HomePage />}/>
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signUp" element={<SignUp />}/>
-        <Route path="/userPage" element={<UserLanding />}/>
-        <Route path="/inventory" element={<CrudInventory />}/>
+       
+
+        <Route path="/inventory" element={<Protected Component={CrudInventory} />} />
+// Other protected routes...
+{/* <Route path="/adminDashboard" element={<Protected Component={AdminDashboard} />} /> */}
         <Route path="/adminDashboard" element={<AdminDashboard />}/>
         <Route path="/manageUsers" element={<ManageUsers />}/>
         <Route path="/manageCouriers" element={<ManageCouriers />}/>
@@ -48,15 +45,7 @@ function App() {
 
 
 
-        
-
-
-
-        
-        {/* <Route path="/aboutus" element={<Footer />}/>
-        <Route path="/courier" element={<Couriers />}/>
-        <Route path="/price" element={<Pricing />}/>
-        <Route path="/feature" element={<Features />}/> */}
+    
        
       </Routes>
     </div>
