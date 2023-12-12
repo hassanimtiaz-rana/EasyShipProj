@@ -111,7 +111,7 @@ const handleEdit=(id)=>{
       axios.delete(`https://localhost:7279/api/Product/${id}`)
         .then((result) => {
           if (result.status === 200) {
-            toast.success('Employee Has been Deleted');
+            toast.success('Product Has been Deleted');
             getData(); // Assuming getData fetches updated employee list
           }
         })
@@ -134,7 +134,7 @@ const handleEdit=(id)=>{
 axios.put(url,data)
 .then((result)=>{
   handleClose();
-  toast.success('Employee Has been Updated');
+  toast.success('Product Has been Updated');
   getData();
   clear();
   
@@ -162,7 +162,7 @@ axios.put(url,data)
     .then((result)=>{
       getData();
       clear();
-      toast.success('Employee Has been added');
+      toast.success('Product Has been added');
 
 
     })
@@ -265,10 +265,10 @@ return(
         onChange={(e)=>setProductName(e.target.value) }
         />
         </Col>
-        <Col><input type="text" className="form-control" placeholder="Enter Quantity"maxLength={10} value={productQuantity}
+        <Col><input type="number" className="form-control" placeholder="Enter Quantity"maxLength={10} value={productQuantity}
         onChange={(e)=>setProductQuantity(e.target.value)}
         /></Col>
-         <Col><input type="text" className="form-control" placeholder="Enter Price Unit" maxLength={10} value={productPrice}
+         <Col><input type="number" className="form-control" placeholder="Enter Price Unit" maxLength={10} value={productPrice}
         onChange={(e)=>setProductPrice(e.target.value)}
         /></Col>
           <Col>
