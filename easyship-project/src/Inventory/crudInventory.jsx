@@ -261,14 +261,14 @@ return(
       <Row>
         
         <Col>
-        <input type="text" className="form-control" placeholder="Enter Product Name" value={productName} 
-        onChange={(e)=>setProductName(e.target.value)}
+        <input type="text" className="form-control" placeholder="Enter Product Name"  maxLength={15} value={productName} 
+        onChange={(e)=>setProductName(e.target.value) }
         />
         </Col>
-        <Col><input type="text" className="form-control" placeholder="Enter Quantity" value={productQuantity}
+        <Col><input type="text" className="form-control" placeholder="Enter Quantity"maxLength={10} value={productQuantity}
         onChange={(e)=>setProductQuantity(e.target.value)}
         /></Col>
-         <Col><input type="text" className="form-control" placeholder="Enter Price Unit" value={productPrice}
+         <Col><input type="text" className="form-control" placeholder="Enter Price Unit" maxLength={10} value={productPrice}
         onChange={(e)=>setProductPrice(e.target.value)}
         /></Col>
           <Col>
