@@ -10,8 +10,8 @@ namespace easyShipBackend.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeContext _employeeContext;
-        public EmployeeController(EmployeeContext employeeContext)
+        private readonly ApiContext _employeeContext;
+        public EmployeeController(ApiContext employeeContext)
         {
             _employeeContext = employeeContext;
 
