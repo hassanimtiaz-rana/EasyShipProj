@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import NavbarUser from "./navbarUser";
 function CrudInventory()
 {
     const [show, setShow] = useState(false);
@@ -215,17 +216,36 @@ axios.put(url,data)
 
 
   }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(5); // Change this value to set the number of records per page
+
+  // Calculate indexes for pagination
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  // Calculate page numbers
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredData.length / recordsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  // Function to change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 return(
     <>
+
     <ToastContainer/>
     <Fragment>
     <Container>
+      <NavbarUser/>
       <br></br>
       <br></br>
       <br></br>
       <br></br>
       <br></br>
+      
       <Row>
     <Col>
       <input
@@ -286,16 +306,16 @@ return(
       </thead>
       <tbody>
         {
-            filteredData.length > 0  ?
-            filteredData.map((item,index)=>{
+            currentRecords.length > 0   ?
+            currentRecords.map((item,index)=>{
                 return(
-                    <tr key={index}>
+                  
+                  <tr>
                     <td>{index+1}</td>
                     <td>{item.id}</td>
                     <td>{item.productName}</td>
                     <td>{item.productPrice}</td>
-                    <td>{item.productQuantity}</td>
-                    
+                    <td className={item.productQuantity === 0 ? 'bg-danger' : ''}>{item.productQuantity}</td>                    
                     <td>{item.productCatagory}</td>
                     <td colSpan={2}>
                       <button className="btn btn-primary" onClick={()=>handleEdit(item.id)}>Edit</button> &nbsp;
@@ -307,12 +327,26 @@ return(
                 )
             })
             :
-            'Loading...'
+            'Not Found...'
         }
         
         
       </tbody>
     </Table>
+    <div className="d-flex justify-content-center mt-3">
+    <nav>
+        <ul className="pagination">
+          {pageNumbers.map((number) => (
+            <li key={number} className="page-item">
+              <a onClick={() => paginate(number)} href="#" className="page-link">
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+   
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update/ Modify Product</Modal.Title>
