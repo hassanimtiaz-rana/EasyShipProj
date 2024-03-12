@@ -242,3 +242,7 @@ C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\ne
 C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\Scrutor.dll
 C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\SendGrid.dll
+C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\StarkbankEcdsa.dll
+C:\Users\hassa\Desktop\EasyShipProj\easyShipBackend\easyShipBackend\bin\Debug\net7.0\System.Net.Mail.Abstractions.dll

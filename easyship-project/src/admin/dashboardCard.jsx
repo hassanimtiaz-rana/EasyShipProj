@@ -10,7 +10,7 @@ const DashboardCard = ({ title, value, changeValue, changeType }) => {
 
         <div className="text-3xl">{value}</div>
 
-        <div className={`flex items-center space-x-1 rtl:space-x-reverse text-sm font-medium ${changeType === 'increase' ? 'text-green-600' : 'text-red-600'}`}>
+        <div className={`flex items-center space-x-1 rtl:space-x-reverse text-sm font-medium ${changeType === 'increase' ? 'text-gray-900' : 'text-orange-500'}`}>
           <span>{changeValue}</span>
           <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             {changeType === 'increase' ? (

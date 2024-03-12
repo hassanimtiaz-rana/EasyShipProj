@@ -11,7 +11,7 @@ using easyShipBackend.Models;
 namespace easyShipBackend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20231212210342_initial")]
+    [Migration("20240310212234_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -87,6 +87,10 @@ namespace easyShipBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

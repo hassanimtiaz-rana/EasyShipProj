@@ -87,6 +87,10 @@ namespace easyShipBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Storename")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

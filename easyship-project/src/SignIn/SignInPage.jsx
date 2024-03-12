@@ -1,49 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import signInImage from './signIn.jpeg';
-// import jwt_decode from 'jwt-decode';
 
+//@ts-ignore  
+// import jwt_decode from "jwt-decode";
+//import jwtdecode from 'jwt-decode';
+//import * as jwt_decode from 'jwt-decode';
+// CommonJS require syntax
+// const jwt_decode = require("jwt-decode");
+// import {jwtDecode,JwtPayload} from 'jwt-decode';
 
 
 function SignInPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Initialize useHistory
+    const navigate = useNavigate();
+
     const handleSignIn = () => {
         const url = 'https://localhost:7279/api/Auth/login';
         const data = {
             username: email,
             password: password,
             email: "string",
-            storename: "string"
+            storename: "string",
+            role:"string"
+            
         };
 
         axios.post(url, data)
             .then((response) => {
-               
+                const token = response.data;
+                localStorage.setItem('token', JSON.stringify(token));
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                // Storing the decoded token in local storage
                 
-                console.log('Logged in:', response.data);
-                    
+                console.log('Decoded token',decodedToken);
+
+                const role=decodedToken.Role;
+                // console.log('Username is:', username2);
+                console.log('Logged in:', token);
                 toast.success('Login successful!');
-                console.log('Before redirection');
-                // navigate('/inventory');
-                if (email === 'admin' && password === 'admin') {
-                    navigate('/adminDashboard'); // Redirect to the admin dashboard
+                if (role === 'admin' ) {
+                    navigate('/adminDashboard');
                 } else {
-                    navigate('/inventory', { state: { email } }); // Redirect to the inventory page for regular users
+                    navigate('/inventory', { state: { email } });
                 }
-                //  navigate('/inventory');
-                 console.log('After redirection');
-               // history.push('/inventory');
-                // Store token in local storage or state for future use
             })
             .catch((error) => {
-                console.error('Login error:', error.response.data);
-
-                if (error.response.status === 400) {
+                console.error('Login error:', error.response ? error.response.data : error);
+                if (error.response && error.response.status === 400) {
                     toast.error('Wrong password or user not found.');
                 } else {
                     toast.error('Login failed.');
@@ -53,11 +61,11 @@ function SignInPage() {
 
     return (
         <>
-            <ToastContainer />
-            <br></br>
-            <br></br>
-            <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
 
+            <ToastContainer />
             <div className="py-16">
                 <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
                     <div className="hidden lg:block lg:w-1/2 bg-cover" style={{ backgroundImage: `url(${signInImage})` }}>
@@ -74,7 +82,7 @@ function SignInPage() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Email Address"
+                                placeholder="Username"
                                 className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none mb-4"
                             />
                             <input
@@ -91,10 +99,9 @@ function SignInPage() {
                                 Login
                             </button>
                         </div>
-                        
                         <div className="mt-4 flex items-center justify-between">
                             <span className="border-b w-1/5 md:w-1/4"></span>
-                            <a href="/signUp" className="text-xs text-gray-500 uppercase">or sign up</a>
+                            <a href="/signUp" className="text-xs text-orange-500 uppercase">or sign up</a>
                             <span className="border-b w-1/5 md:w-1/4"></span>
                         </div>
                     </div>

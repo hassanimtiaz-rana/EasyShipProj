@@ -6,17 +6,23 @@ import 'react-toastify/dist/ReactToastify.css';
 import animationData from './data.json';
 
 function SignUp() {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
     const [storename, setStorename] = useState('');
     const handleSignUp = () => {
+        if (!username || !password || !email || !storename) {
+            toast.error('Please fill in all fields');
+            return;
+        }
 		const url = 'https://localhost:7279/api/Auth/register';
 		const data = {
 			username: username,
 			password: password,
 			email: email, // Include email in data
-            storename: storename // Include storename in data
+            storename: storename, // Include storename in data
+            role:"user"
 		};
 	
 		axios.post(url, data)
@@ -64,7 +70,8 @@ function SignUp() {
                                     onChange={(e) => setUsername(e.target.value)}
                                     placeholder="Username"
                                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                />
+                                    required
+                               />
                             </div>
                             <div className="mb-4">
                                 <input
@@ -73,8 +80,9 @@ function SignUp() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Password"
                                     className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                />
-                                <p className="text-xs italic text-red-500">Please choose a password.</p>
+                                    required
+                             />
+                                <p className="text-xs italic text-orange-500">Please choose a password.</p>
                             </div>
 							<div className="mb-4">
                 <input
@@ -83,6 +91,7 @@ function SignUp() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    required
                 />
             </div>
             <div className="mb-4">
@@ -92,6 +101,7 @@ function SignUp() {
                     onChange={(e) => setStorename(e.target.value)}
                     placeholder="Storename"
                     className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    required
                 />
             </div>
                             <div className="mb-6 text-center">
@@ -110,7 +120,7 @@ function SignUp() {
                                 </a>
                             </div> */}
                             <div className="text-center">
-                                <a className="inline-block text-sm text-orange-500 dark:text-blue-500 align-baseline hover:text-orange-800" href="/signIn">
+                                <a className="inline-block text-sm text-orange-500 dark:text-blue-500 align-baseline hover:text-orange-800" href="/login">
                                     Already have an account? Login!
                                 </a>
                             </div>

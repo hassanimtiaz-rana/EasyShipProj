@@ -9,11 +9,19 @@ import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 import NavbarUser from "./navbarUser";
-import { useLocation } from 'react-router-dom';
+//  import * as jwt_decode from 'jwt-decode';
+ import { useLocation } from 'react-router-dom';
 function CrudInventory()
 {
-  const location = useLocation();
-    const email = location.state ? location.state.email : null;
+  
+  const token = localStorage.getItem('token');
+
+  console.log('Token in inventory',token);
+  // const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const email = decodedToken.Username; // Assuming 'sub' contains the username
+  console.log('Username in inventory is=>',email);
+  // setUsername(usernameFromToken);
 
     const [show, setShow] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -61,8 +69,11 @@ const filteredData = data.filter((item) => {
   );
 });
 const filteredInventoryData = data.filter((item) => {
-
-  return item.username === email;
+  return (
+    (item.username === email) &&
+    (item.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.productCatagory.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
 });
 
 const handleEdit=(id)=>{
@@ -266,7 +277,14 @@ return(
         </Col>
        
         <Col>
-        <button className="btn btn-primary" onClick={()=>handleSave()}>Submit</button>
+        <button
+  className="btn btn-primary"
+  style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }}
+  onClick={() => handleSave()}
+>
+  Submit
+</button>
+        {/* <button className="btn btn-primary style={{ backgroundColor: '#1f2937' }}" onClick={()=>handleSave()}>Submit</button> */}
         </Col>
       </Row>
     </Container>
@@ -297,8 +315,8 @@ return(
                     <td className={item.productQuantity === 0 ? 'bg-danger' : ''}>{item.productQuantity}</td>                    
                     <td>{item.productCatagory}</td>
                     <td colSpan={2}>
-                      <button className="btn btn-primary" onClick={()=>handleEdit(item.id)}>Edit</button> &nbsp;
-                      <button className="btn btn-danger" onClick={()=>handleDelete(item.id)}>Delete</button>
+                      <button className="btn btn-primary" style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }} onClick={()=>handleEdit(item.id)}>Edit</button> &nbsp;
+                      <button className="btn btn-danger "style={{ backgroundColor: '#ea580c',borderColor: '#ea580c' }} onClick={()=>handleDelete(item.id)}>Delete</button>
 
                     </td>
                     </tr>

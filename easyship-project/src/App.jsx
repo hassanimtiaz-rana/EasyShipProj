@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HomePage from './LandingPage/homePage.jsx';
-import {  Routes, Route } from "react-router-dom";
+ import {  Routes, Route } from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './LandingPage/navbar.jsx';
 import Hero from './LandingPage/hero.jsx';
 import Features from './LandingPage/features.jsx';
@@ -21,6 +22,10 @@ import ManageUsers from './admin/manageUsers.jsx';
 import ManageCouriers from './admin/manageCouriers.jsx';
 import ManageComplaints from './admin/manageComplaints.jsx';
 import Protected from './Protected.jsx';
+import ProtectedAdmin from './ProtectedAdmin.jsx';
+
+
+// import UserRoute  from './ProtectedRoutes.jsx';
 
 
 function App() {
@@ -31,23 +36,36 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/HomePage" element={<HomePage />}/>
-        <Route path="/signIn" element={<SignIn />}/>
+        <Route path="/login" element={<SignIn />}/>
         <Route path="/signUp" element={<SignUp />}/>
-       
+        <Route path="/inventory" element={<Protected component={CrudInventory} />} />
+        {/* //Admin */}
+        <Route path="/adminDashboard" element={<ProtectedAdmin component={AdminDashboard} />} />
+        <Route path="/manageUsers" element={<ProtectedAdmin component={ManageUsers} />} />
+        <Route path="/manageCouriers" element={<ProtectedAdmin component={ManageCouriers} />} />
+        <Route path="/manageComplaints" element={<ProtectedAdmin component={ManageComplaints} />} />
 
-        <Route path="/inventory" element={<Protected Component={CrudInventory} />} />
+
+        
+
+
+         {/* <Route path="/inventory" element={<UserRoute Component={CrudInventory} />} />   */}
+       
+       {/* <Route path="/inventory" element={<CrudInventory />}/>   */}
 // Other protected routes...
-{/* <Route path="/adminDashboard" element={<Protected Component={AdminDashboard} />} /> */}
-        <Route path="/adminDashboard" element={<AdminDashboard />}/>
-        <Route path="/manageUsers" element={<ManageUsers />}/>
+ {/* <Route path="/adminDashboard" element={<Protected Component={AdminDashboard} />} />  */}
+         {/* <Route path="/adminDashboard" element={<AdminDashboard />}/> */}
+        {/* <Route path="/manageUsers" element={<ManageUsers />}/>
         <Route path="/manageCouriers" element={<ManageCouriers />}/>
-        <Route path="/manageComplaints" element={<ManageComplaints />}/>
+        <Route path="/manageComplaints" element={<ManageComplaints />}/> */}
 
 
 
     
        
       </Routes>
+      
+      
     </div>
   );
 }

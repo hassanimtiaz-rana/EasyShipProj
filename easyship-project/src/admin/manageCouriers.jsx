@@ -123,7 +123,7 @@ function ManageCouriers() {
         />
         </Col>
         <Col>
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary"style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }}>Submit</button>
         </Col>
       </Row>
           <br />
@@ -148,8 +148,8 @@ function ManageCouriers() {
                   <td>{item.courierName}</td>
                   <td>{item.courierEmail}</td>
                   <td colSpan={2}>
-                    <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>Edit</button> &nbsp;
-                    <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
+                    <button className="btn btn-primary"style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }} onClick={() => handleEdit(item.id)}>Edit</button> &nbsp;
+                    <button className="btn btn-danger"style={{ backgroundColor: '#ea580c',borderColor: '#ea580c' }} onClick={() => handleDelete(item.id)}>Delete</button>
                   </td>
                 </tr>
               ))

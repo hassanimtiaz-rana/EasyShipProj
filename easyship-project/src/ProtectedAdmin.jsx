@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 
-function Protected(props) {
+function ProtectedAdmin(props) {
     const { component: Component } = props;
 
     // Check if the user is logged in
@@ -20,7 +20,7 @@ function Protected(props) {
     const userRole = decodedToken.Role; // Assuming 'role' is stored in the JWT payload
     
     // If the user role is not 'user', redirect to the login page
-    if (userRole !== 'user') {
+    if (userRole !== 'admin') {
         return <Navigate to="/login" />;
     }
 
@@ -32,4 +32,4 @@ function Protected(props) {
     );
 }
 
-export default Protected;
+export default ProtectedAdmin;

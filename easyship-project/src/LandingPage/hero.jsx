@@ -10,7 +10,7 @@ function Hero() {
             <span className="block xl:inline">An E-Commerce Business</span>
             <span className="block text-orange-600 xl:inline">Solution</span>
           </h1>
-          <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+          <p className="mt-3 font-sans text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
           “Easy Ship” aims to introduce automation into order tracking, replacing the need for manual data entry and record-keeping. It is a centralized hub where user can find different couriers for delivery. The system will automatically choose the best courier by considering various factors which will make e-commerce store smooth, fast and reliable
           </p>
           {/* Button Section */}
