@@ -26,12 +26,18 @@ function SignInPage() {
             password: password,
             email: "string",
             storename: "string",
-            role:"string"
+            role:"string",
+            verified: true,
+            verificationToken: "string",
+             resetPasswordToken: "string",
+             resetPasswordTokenExpiration: "2024-03-16T22:20:00.506Z"
             
         };
 
         axios.post(url, data)
             .then((response) => {
+                
+
                 const token = response.data;
                 localStorage.setItem('token', JSON.stringify(token));
                 const decodedToken = JSON.parse(atob(token.split('.')[1]));
@@ -40,9 +46,10 @@ function SignInPage() {
                 console.log('Decoded token',decodedToken);
 
                 const role=decodedToken.Role;
-                // console.log('Username is:', username2);
+               
                 console.log('Logged in:', token);
                 toast.success('Login successful!');
+                // navigate('/HomePage');
                 if (role === 'admin' ) {
                     navigate('/adminDashboard');
                 } else {

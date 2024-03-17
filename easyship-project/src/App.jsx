@@ -23,7 +23,8 @@ import ManageCouriers from './admin/manageCouriers.jsx';
 import ManageComplaints from './admin/manageComplaints.jsx';
 import Protected from './Protected.jsx';
 import ProtectedAdmin from './ProtectedAdmin.jsx';
-
+import ForgetPasswordPage from './ForgetPassword/ForgetPasswordPage.jsx';
+import ResetPasswordPage from './Reset Password/ResetPasswordPage.jsx';
 
 // import UserRoute  from './ProtectedRoutes.jsx';
 
@@ -36,6 +37,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/HomePage" element={<HomePage />}/>
+        <Route path="/forgotpassword" element={<ForgetPasswordPage />}/>
+        {/* <Route path="/api/auth/reset-password"> */}
+        <Route path="/api/auth/reset-password/:email/:resetToken" element={<ResetPasswordPage />}/>
+  
         <Route path="/login" element={<SignIn />}/>
         <Route path="/signUp" element={<SignUp />}/>
         <Route path="/inventory" element={<Protected component={CrudInventory} />} />
@@ -44,6 +49,7 @@ function App() {
         <Route path="/manageUsers" element={<ProtectedAdmin component={ManageUsers} />} />
         <Route path="/manageCouriers" element={<ProtectedAdmin component={ManageCouriers} />} />
         <Route path="/manageComplaints" element={<ProtectedAdmin component={ManageComplaints} />} />
+
 
 
         

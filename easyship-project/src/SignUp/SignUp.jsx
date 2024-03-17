@@ -22,7 +22,11 @@ function SignUp() {
 			password: password,
 			email: email, // Include email in data
             storename: storename, // Include storename in data
-            role:"user"
+            role:"user",
+            verified: true,
+            verificationToken: "string",
+             resetPasswordToken: "string",
+             resetPasswordTokenExpiration: "2024-03-16T22:20:00.506Z"
 		};
 	
 		axios.post(url, data)
