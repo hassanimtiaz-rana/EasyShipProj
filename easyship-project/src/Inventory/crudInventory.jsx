@@ -99,9 +99,11 @@ const handleEdit=(id)=>{
       axios.delete(`https://localhost:7279/api/Product/${id}`)
         .then((result) => {
           if (result.status === 200) {
+            
             toast.success('Product Has been Deleted');
-            getData(); // Assuming getData fetches updated employee list
+            getData(); 
           }
+          
         })
         .catch((error) => {
           toast.error(error);
@@ -186,26 +188,26 @@ axios.put(url,data)
 
 
   }
-  const handleIsActive=(e)=>{
-    if(e.target.checked){
-      setIsActive(1);
-    }
-    else{
-      setIsActive(0);
-    }
+  // const handleIsActive=(e)=>{
+  //   if(e.target.checked){
+  //     setIsActive(1);
+  //   }
+  //   else{
+  //     setIsActive(0);
+  //   }
 
 
-  }
-  const handleEditActive=(e)=>{
-    if(e.target.checked){
-      setEditIsActive(1);
-    }
-    else{
-      setEditIsActive(0);
-    }
+  // }
+  // const handleEditActive=(e)=>{
+  //   if(e.target.checked){
+  //     setEditIsActive(1);
+  //   }
+  //   else{
+  //     setEditIsActive(0);
+  //   }
 
 
-  }
+  // }
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(5); // Change this value to set the number of records per page
 
