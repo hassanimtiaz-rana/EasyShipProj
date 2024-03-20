@@ -25,6 +25,7 @@ import Protected from './Protected.jsx';
 import ProtectedAdmin from './ProtectedAdmin.jsx';
 import ForgetPasswordPage from './ForgetPassword/ForgetPasswordPage.jsx';
 import ResetPasswordPage from './Reset Password/ResetPasswordPage.jsx';
+import CourierRecommendation from './Courier Recommendation/CourierRecommendation.jsx';
 
 // import UserRoute  from './ProtectedRoutes.jsx';
 
@@ -37,17 +38,23 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/HomePage" element={<HomePage />}/>
+        <Route path="/AdminDashboard" element={<AdminDashboard />}/>
+        <Route path="/manageCouriers" element={<ManageCouriers />}/>
+
+
         <Route path="/forgotpassword" element={<ForgetPasswordPage />}/>
         {/* <Route path="/api/auth/reset-password"> */}
         <Route path="/api/auth/reset-password/:email/:resetToken" element={<ResetPasswordPage />}/>
-  
         <Route path="/login" element={<SignIn />}/>
+        <Route path="/cr" element={<CourierRecommendation />}/>
+        
+        <Route path="/manageUsers" element={<ManageUsers />}/>
         <Route path="/signUp" element={<SignUp />}/>
         <Route path="/inventory" element={<Protected component={CrudInventory} />} />
         {/* //Admin */}
-        <Route path="/adminDashboard" element={<ProtectedAdmin component={AdminDashboard} />} />
-        <Route path="/manageUsers" element={<ProtectedAdmin component={ManageUsers} />} />
-        <Route path="/manageCouriers" element={<ProtectedAdmin component={ManageCouriers} />} />
+        {/* <Route path="/adminDashboard" element={<ProtectedAdmin component={AdminDashboard} />} /> */}
+        {/* <Route path="/manageUsers" element={<ProtectedAdmin component={ManageUsers} />} /> */}
+        {/* <Route path="/manageCouriers" element={<ProtectedAdmin component={ManageCouriers} />} /> */}
         <Route path="/manageComplaints" element={<ProtectedAdmin component={ManageComplaints} />} />
 
 

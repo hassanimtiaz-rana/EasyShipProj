@@ -12,7 +12,7 @@ using easyShipBackend.Models;
 namespace easyShipBackend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240316154408_initial")]
+    [Migration("20240319225720_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -24,6 +24,38 @@ namespace easyShipBackend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("easyShipBackend.Models.CourierDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Courier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryTimeline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DestinationCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickupCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ShippingCharges")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourierDetails");
+                });
 
             modelBuilder.Entity("easyShipBackend.Models.Employee", b =>
                 {

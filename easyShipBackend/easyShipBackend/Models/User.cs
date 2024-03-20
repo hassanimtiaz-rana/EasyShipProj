@@ -14,9 +14,9 @@ namespace easyShipBackend.Models
 
         public string Storename { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
-        public bool Verified { get; set; }
-        public string VerificationToken { get; set; }
-        public string ResetPasswordToken { get; set; }
+        public bool Verified { get; set; } // Nullable bool
+        public string VerificationToken { get; set; } // Nullable string
+        public string ResetPasswordToken { get; set; } // Nullable string
         public DateTime? ResetPasswordTokenExpiration { get; set; }
 
 
