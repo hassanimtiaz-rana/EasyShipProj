@@ -26,6 +26,9 @@ import ProtectedAdmin from './ProtectedAdmin.jsx';
 import ForgetPasswordPage from './ForgetPassword/ForgetPasswordPage.jsx';
 import ResetPasswordPage from './Reset Password/ResetPasswordPage.jsx';
 import CourierRecommendation from './Courier Recommendation/CourierRecommendation.jsx';
+import Help from './Help/help.jsx';
+import UserManagement from './Team/team.jsx';
+import OrderPage from './Order/OrderPage.jsx';
 
 // import UserRoute  from './ProtectedRoutes.jsx';
 
@@ -40,6 +43,16 @@ function App() {
         <Route path="/HomePage" element={<HomePage />}/>
         <Route path="/AdminDashboard" element={<AdminDashboard />}/>
         <Route path="/manageCouriers" element={<ManageCouriers />}/>
+        <Route path="/umg" element={<UserManagement />}/>
+        <Route path="/inventory" element={<CrudInventory />}/>
+        <Route path="/help" element={<Help />}/>
+        <Route path="/mc" element={<ManageComplaints />}/>
+        <Route path="/opg" element={<OrderPage />}/>
+
+
+
+
+
 
 
         <Route path="/forgotpassword" element={<ForgetPasswordPage />}/>
@@ -47,15 +60,17 @@ function App() {
         <Route path="/api/auth/reset-password/:email/:resetToken" element={<ResetPasswordPage />}/>
         <Route path="/login" element={<SignIn />}/>
         <Route path="/cr" element={<CourierRecommendation />}/>
+        <Route path="/opg" element={<CourierRecommendation />}/>
+
         
         <Route path="/manageUsers" element={<ManageUsers />}/>
         <Route path="/signUp" element={<SignUp />}/>
-        <Route path="/inventory" element={<Protected component={CrudInventory} />} />
+        {/* <Route path="/inventory" element={<Protected component={CrudInventory} />} /> */}
         {/* //Admin */}
         {/* <Route path="/adminDashboard" element={<ProtectedAdmin component={AdminDashboard} />} /> */}
         {/* <Route path="/manageUsers" element={<ProtectedAdmin component={ManageUsers} />} /> */}
         {/* <Route path="/manageCouriers" element={<ProtectedAdmin component={ManageCouriers} />} /> */}
-        <Route path="/manageComplaints" element={<ProtectedAdmin component={ManageComplaints} />} />
+        {/* <Route path="/manageComplaints" element={<ProtectedAdmin component={ManageComplaints} />} /> */}
 
 
 

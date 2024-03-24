@@ -4,6 +4,7 @@ import Lottie from 'react-lottie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import animationData from './data.json';
+import Navbar from './navbar';
 
 function SignUp() {
     const [username, setUsername] = useState('');
@@ -23,7 +24,7 @@ function SignUp() {
             password: password,
             email: email,
             storename: storename,
-            role: "user",
+            role: "superuser",
             verified: true,
             verificationToken: "string",
             resetPasswordToken: "string",
@@ -56,7 +57,9 @@ function SignUp() {
     };
 
     return (
-        <div className="h-full bg-white dark:bg-gray-900">
+        <>
+        <Navbar/>
+          <div className="h-full bg-white dark:bg-gray-900">
             <ToastContainer /> {/* ToastContainer for notifications */}
             <div className="mx-auto">
                 <div className="flex justify-center px-6 py-12">
@@ -133,6 +136,8 @@ function SignUp() {
                 </div>
             </div>
         </div>
+        </>
+      
     );
 }
 

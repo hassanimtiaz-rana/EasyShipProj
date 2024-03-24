@@ -80,6 +80,43 @@ namespace easyShipBackend.Controllers
             }
             return Ok();
         }
+        [HttpPut("UpdateQuantity")]
+        public async Task<IActionResult> UpdateQuantity([FromBody] ProductQuantityRequest request)
+        {
+            var product = await _apiContext.Productss.FindAsync(request.Id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Ensure quantity is non-negative
+            if (request.Quantity < 0)
+            {
+                return BadRequest("Quantity should be a non-negative value.");
+            }
+
+            // Check if the requested quantity is available
+            if (product.productQuantity < request.Quantity)
+            {
+                return BadRequest("Insufficient quantity available for update.");
+            }
+
+            product.productQuantity -= request.Quantity; // Subtract the quantity
+
+            try
+            {
+                await _apiContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(500); // Handle concurrency exception appropriately
+            }
+
+            return NoContent();
+        }
+
+
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {

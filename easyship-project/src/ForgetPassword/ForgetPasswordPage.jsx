@@ -36,12 +36,18 @@ function ForgotPasswordPage() {
                                 placeholder="Enter your email"
                                 className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none mb-4"
                             />
-                            <button
-                                className="bg-blue-500 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-700"
+                             <button
+                                className="bg-orange-600 text-white font-bold py-2 px-4 w-full rounded hover:bg-orange-700"
                                 onClick={handleForgetPassword}
                             >
                                 Reset Password
                             </button>
+                            {/* <button
+                                className="bg-blue-500 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-700"
+                                onClick={handleForgetPassword}
+                            >
+                                Reset Password
+                            </button> */}
                         </div>
                     </div>
                 </div>

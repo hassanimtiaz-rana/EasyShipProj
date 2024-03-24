@@ -30,6 +30,7 @@ function ManageCouriers() {
   const[editShippingCharges,setEditShippingCharges]=useState('');
   const[editPickupCity,setEditPickupCity]=useState('');
   const[editDestinationCity,setEditdestinationCity]=useState('');
+  const cities = ["Faisalabad", "Lahore", "Karachi", "Islamabad", "Quetta"];
 
   
 
@@ -237,17 +238,21 @@ function ManageCouriers() {
       <br></br>
       <Row>
       <Col>
-        <input type="text" className="form-control" placeholder="Pickup City"  maxLength={15} value={pickupCity} 
-        onChange={(e)=>setPickupCity(e.target.value) }
-  
-        />
-        </Col>
-        <Col>
-        <input type="text" className="form-control" placeholder="Destination City"  maxLength={15} value={destinationCity} 
-        onChange={(e)=>setdestinationCity(e.target.value) }
-  
-        />
-        </Col>
+              <select className="form-control" value={pickupCity} onChange={(e)=>setPickupCity(e.target.value)}>
+                <option value="">Select Pickup City</option>
+                {cities.map(city => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
+            </Col>
+            <Col>
+              <select className="form-control" value={destinationCity} onChange={(e)=>setdestinationCity(e.target.value)}>
+                <option value="">Select Destination City</option>
+                {cities.map(city => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
+            </Col>
         <Col>
         <button
   className="btn btn-primary"

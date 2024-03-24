@@ -11,4 +11,12 @@
         public string? Username { get; set; }
 
     }
+    public class ProductQuantityRequest
+    {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
+
+
+
+    }
 }

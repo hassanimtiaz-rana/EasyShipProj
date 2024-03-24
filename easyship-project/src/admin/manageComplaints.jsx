@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import axios from "axios";
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
@@ -7,76 +8,81 @@ import Col from 'react-bootstrap/Col';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import AdminNavbar from "./adminNavbar";
+import { format } from 'date-fns';
 
 function ManageComplaints() {
     const [show, setShow] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [filterStatus, setFilterStatus] = useState('All');
     const [editId, setEditId] = useState('');
     const [editComplaintNumber, setEditComplaintNumber] = useState('');
     const [editUsername, setEditUsername] = useState('');
     const [editComplaintMessage, setEditComplaintMessage] = useState('');
+    const [complaintsData, setComplaintsData] = useState([]);
 
-    const complaintsData = [
-        {
-            id: 1,
-            complaintNumber: '1234',
-            username: 'user1',
-            complaintMessage: 'Issue with product delivery.',
-        },
-        {
-            id: 2,
-            complaintNumber: '5678',
-            username: 'user2',
-            complaintMessage: 'Issue With Inventory.',
-        },
-        {
-            id: 3,
-            complaintNumber: '9012',
-            username: 'user3',
-            complaintMessage: 'Issue with Order Management.',
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get("https://localhost:7279/api/HelpRequest/all");
+            setComplaintsData(response.data);
+        } catch (error) {
+            console.error("Error fetching complaints data:", error);
         }
-    ];
-
-    const [data, setData] = useState(complaintsData);
+    };
 
     const handleSearchInputChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    const filteredData = data.filter((item) => {
-        return (
-            item.complaintNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.complaintMessage.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+    const handleFilterChange = (status) => {
+        if (status === filterStatus) {
+            // Uncheck the checkbox if it was already checked
+            setFilterStatus('All');
+        } else {
+            setFilterStatus(status);
+        }
+    };
+
+    const filteredData = complaintsData.filter((item) => {
+        if (filterStatus === 'All') {
+            return item.username.toLowerCase().includes(searchQuery.toLowerCase());
+        } else {
+            return item.status === filterStatus && item.username.toLowerCase().includes(searchQuery.toLowerCase());
+        }
     });
 
     const handleEdit = (id) => {
-        handleShow();
-        // Fetch data based on ID and populate the modal fields
-        const selectedItem = data.find(item => item.id === id);
+        const selectedItem = complaintsData.find(item => item.id === id);
         if (selectedItem) {
             setEditId(selectedItem.id);
-            setEditComplaintNumber(selectedItem.complaintNumber);
             setEditUsername(selectedItem.username);
-            setEditComplaintMessage(selectedItem.complaintMessage);
+            setEditComplaintMessage(selectedItem.message);
+            setShow(true);
         } else {
             toast.error('Complaint not found');
         }
     };
 
-    const handleDelete = (id) => {
-        // Handle delete functionality here
-        // ...
+    const handleStatusUpdate = async (id, status) => {
+        try {
+            await axios.put(`https://localhost:7279/api/HelpRequest/updateStatus/${id}`, { status });
+            // Display toast success message
+            toast.success(`Complaint status updated to ${status}`);
+            // Refetch data after successful update
+            fetchData();
+            // Close the modal
+            handleClose();
+        } catch (error) {
+            console.error("Error updating complaint status:", error);
+            toast.error('Failed to update complaint status');
+        }
     };
-
-    const handleUpdate = () => {
-        // Handle update functionality here
-        // ...
-    };
+    
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     return (
         <>
@@ -86,11 +92,9 @@ function ManageComplaints() {
                 <Container>
                     <br />
                     <br/>
-                    <br/>
                     <br />
                     <br/>
                     <br/>
-
                     <Row>
                         <Col>
                             <input
@@ -103,6 +107,29 @@ function ManageComplaints() {
                         </Col>
                     </Row>
                     <br />
+                    <Row>
+                        <Col className="text-center"> {/* Center align the checkboxes */}
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={filterStatus === 'Pending'}
+                                        onChange={() => handleFilterChange('Pending')}
+                                    />
+                                    Pending
+                                </label>
+                                &nbsp;
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={filterStatus === 'Fixed'}
+                                        onChange={() => handleFilterChange('Fixed')}
+                                    />
+                                    Fixed
+                                </label>
+                            </div>
+                        </Col>
+                    </Row>
                 </Container>
                 <br />
                 <Table striped bordered hover>
@@ -111,30 +138,75 @@ function ManageComplaints() {
                             <th>#</th>
                             <th>Complaint Number</th>
                             <th>Username</th>
-                            <th>Complaint Message</th>
+                            <th>Email</th>
+                            <th>StoreName</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Date: Time:</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            filteredData.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.complaintNumber}</td>
-                                    <td>{item.username}</td>
-                                    <td>{item.complaintMessage}</td>
-                                    <td colSpan={2}>
-                                        <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>View</button> &nbsp;
-                                        <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                        {filteredData.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.id}</td>
+                                <td>{item.username}</td>
+                                <td>{item.email}</td>
+                                <td>{item.storename}</td>
+                                <td>{item.type}</td>
+                                <td>{item.status}</td>
+                                <td>{format(new Date(item.time), 'MM/dd/yyyy HH:mm:ss')}</td>
+
+                                <td colSpan={2}>
+                                    <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>View</button>
+                                    &nbsp;
+                                    {item.status !== 'Fixed' &&
+                                        <button className="btn btn-success" onClick={() => handleStatusUpdate(item.id, 'Fixed')}>Fixed</button>
+                                    }
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
                 <Modal show={show} onHide={handleClose}>
-                    {/* Modal content */}
-                    {/* ... */}
+                    <Modal.Header closeButton>
+                        <Modal.Title>View Complaint</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <label htmlFor="viewUsername">Username:</label>
+                                    <input
+                                        type="text"
+                                        id="viewUsername"
+                                        className="form-control"
+                                        placeholder="Username"
+                                        value={editUsername}
+                                        disabled
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <label htmlFor="viewMessage">Message:</label>
+                                    <textarea
+                                        id="viewMessage"
+                                        className="form-control"
+                                        placeholder="Message"
+                                        value={editComplaintMessage}
+                                        readOnly
+                                    />
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-secondary" onClick={handleClose}>
+                            Close
+                        </button>
+                    </Modal.Footer>
                 </Modal>
             </Fragment>
         </>

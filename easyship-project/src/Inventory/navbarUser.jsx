@@ -2,6 +2,10 @@ import easyShipLogo from './easyShipLogo.png';
 import { HashLink as Link } from 'react-router-hash-link';
 
 function NavbarUser() {
+  const token = localStorage.getItem('token');
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const role = decodedToken.Role;
+
   return (
     <>
       <nav className="bg-white border-gray-200 py-2.5 dark:bg-gray-900 fixed top-0 left-0 right-0 z-10">
@@ -19,23 +23,26 @@ function NavbarUser() {
             {/* Use Tailwind responsive classes to show/hide based on screen size */}
             <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-              <a  className="nav-link">Inventory</a>
+                <a href="/inventory" className="nav-link">Inventory</a>
+              </li>
+              {role === 'superuser' && (
+                <>
+                  <li>
+                    <a href="/dashboard" className="nav-link">Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="/orders" className="nav-link">Orders</a>
+                  </li>
+                </>
+              )}
+              <li>
+                <a href="/cr" className="nav-link">Courier Recommendation</a>
               </li>
               <li>
-              <a  className="nav-link">Dashboard</a>
+                <a href="/reports" className="nav-link">Reports</a>
               </li>
               <li>
-              <a  className="nav-link">Orders</a>
-              </li>
-              <li>
-              <a  className="nav-link">Payments</a>
-
-              </li>
-              <li>
-                <a  className="nav-link">Reports</a>
-              </li>
-              <li>
-                <a  className="nav-link">Help</a>
+                <a href="/help" className="nav-link">Help</a>
               </li>
             </ul>
           </div>

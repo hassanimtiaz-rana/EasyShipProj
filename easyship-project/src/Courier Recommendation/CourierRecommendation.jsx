@@ -4,6 +4,7 @@ import NavbarUser from './navbarUser';
 import { Table } from 'react-bootstrap';
 
 function CourierRecommendation() {
+    const cities = ['Faisalabad', 'Lahore', 'Karachi', 'Islamabad', 'Quetta'];
     const [data, setData] = useState([]);
     const [pickupCity, setPickupCity] = useState('');
     const [destinationCity, setDestinationCity] = useState('');
@@ -74,14 +75,24 @@ function CourierRecommendation() {
             <p>Get Latest Courier Rates of Pakistan...</p>
         </div>
         <div className="mt-4 sm:mt-6">
+                        <div className="mb-2">
+                            <label htmlFor="pickupCity" className="block text-black text-lg font-medium">Pickup City</label>
+                            <select id="pickupCity" name="pickupCity" value={pickupCity} onChange={(e) => setPickupCity(e.target.value)} className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" required>
+                                <option value="">Select Pickup City</option>
+                                {cities.map(city => (
+                                    <option key={city} value={city}>{city}</option>
+                                ))}
+                            </select>
+                        </div>
             <div className="mb-2">
-                <label htmlFor="pickupCity" className="block text-black text-lg font-medium">Pickup City</label>
-                <input type="text" id="pickupCity" name="pickupCity" value={pickupCity} onChange={(e) => setPickupCity(e.target.value)} className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" required />
-            </div>
-            <div className="mb-2">
-                <label htmlFor="destinationCity" className="block text-black text-lg font-medium">Destination City</label>
-                <input type="text" id="destinationCity" name="destinationCity" value={destinationCity} onChange={(e) => setDestinationCity(e.target.value)} className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" required />
-            </div>
+                            <label htmlFor="destinationCity" className="block text-black text-lg font-medium">Destination City</label>
+                            <select id="destinationCity" name="destinationCity" value={destinationCity} onChange={(e) => setDestinationCity(e.target.value)} className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" required>
+                                <option value="">Select Destination City</option>
+                                {cities.map(city => (
+                                    <option key={city} value={city}>{city}</option>
+                                ))}
+                            </select>
+                        </div>
             <div className="mb-2">
                 <label htmlFor="weight" className="block text-black text-lg font-medium">Weight (kg)</label>
                 <input type="number" id="weight" name="weight" value={weight} onChange={(e) => setWeight(e.target.value)} className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" min="0.5" required />

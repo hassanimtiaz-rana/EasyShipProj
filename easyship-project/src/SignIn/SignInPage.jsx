@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import signInImage from './signIn.jpeg';
+import Navbar from './navbar';
 
 //@ts-ignore  
 // import jwt_decode from "jwt-decode";
@@ -68,6 +69,8 @@ function SignInPage() {
 
     return (
         <>
+        <Navbar/>
+        <br></br>
         <br></br>
         <br></br>
         <br></br>
@@ -105,6 +108,8 @@ function SignInPage() {
                             >
                                 Login
                             </button>
+                            <a href="/forgotpassword" className="block text-center mt-2 text-xs text-gray-500 hover:text-gray-700">Forgot Password?</a>
+                        
                         </div>
                         <div className="mt-4 flex items-center justify-between">
                             <span className="border-b w-1/5 md:w-1/4"></span>

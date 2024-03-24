@@ -91,5 +91,15 @@ namespace easyShipBackend.Controllers
             await _apiContext.SaveChangesAsync();
             return Ok();
         }
+        [HttpGet("CalculateShipping")]
+        public async Task<ActionResult<float>> CalculateShippingCharges(string fromCity, string toCity)
+        {
+            var courier = await _apiContext.CourierDetails.FirstOrDefaultAsync(c => c.PickupCity == fromCity && c.DestinationCity == toCity);
+            if (courier == null)
+            {
+                return NotFound("No courier available for the specified cities.");
+            }
+            return Ok(courier.ShippingCharges);
+        }
     }
 }

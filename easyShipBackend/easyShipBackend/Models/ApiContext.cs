@@ -13,6 +13,9 @@ namespace easyShipBackend.Models
         public DbSet<Product> Productss { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<CourierDetails> CourierDetails { get; set; }
+        public DbSet<HelpRequest> HelpRequest { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
 
 
         internal Task<ActionResult<IEnumerable<Employee>>> ToListAsync()

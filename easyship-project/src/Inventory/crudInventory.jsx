@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import NavbarUser from "./navbarUser";
+import NavbarUser from './navbarUser';
 //  import * as jwt_decode from 'jwt-decode';
  import { useLocation } from 'react-router-dom';
 function CrudInventory()
