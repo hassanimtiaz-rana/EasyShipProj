@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using easyShipBackend.Models;
 using easyShipBackend.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace easyShipBackend.Controllers
 {
@@ -38,6 +39,18 @@ namespace easyShipBackend.Controllers
             return Ok(new { userName, roles });
         }
 
+        [HttpGet("ByStore/{storename}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersByStore(string storename)
+        {
+            var usersByStore = await _apiContext.User.Where(u => u.Storename == storename).ToListAsync();
+            if (usersByStore == null || usersByStore.Count == 0)
+            {
+                return NotFound(); // or appropriate response if no data found
+            }
+
+            return usersByStore;
+        }
+
         [HttpPost("register")]
         public ActionResult<User> Register(UserDto request)
         {
@@ -47,6 +60,17 @@ namespace easyShipBackend.Controllers
                 if (existingUser != null)
                 {
                     return BadRequest("Username already exists");
+                }
+                var existingEmail = _apiContext.User.FirstOrDefault(u => u.Email == request.Email);
+                if (existingEmail != null)
+                {
+                    return BadRequest("Email already exists");
+                }
+
+                var existingStorename = _apiContext.User.FirstOrDefault(u => u.Storename == request.Storename);
+                if (existingStorename != null)
+                {
+                    return BadRequest("Storename already exists");
                 }
 
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
@@ -62,6 +86,53 @@ namespace easyShipBackend.Controllers
                     VerificationToken = Guid.NewGuid().ToString(), // Generate verification token
                     ResetPasswordToken = "No reset Request "
                    
+                };
+
+                _apiContext.User.Add(newUser);
+                _apiContext.SaveChanges();
+
+                // Send the registration email with verification link
+                SendRegistrationEmail(newUser);
+
+                return Ok(newUser);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error during registration: " + ex.Message);
+                return StatusCode(500, "Error occurred while registering the user");
+            }
+        }
+        [HttpPost("register-member")]
+        public ActionResult<User> RegisterMember(UserDto request)
+        {
+            try
+            {
+                var existingUser = _apiContext.User.FirstOrDefault(u => u.Username == request.Username);
+                if (existingUser != null)
+                {
+                    return BadRequest("Username already exists");
+                }
+                var existingEmail = _apiContext.User.FirstOrDefault(u => u.Email == request.Email);
+                if (existingEmail != null)
+                {
+                    return BadRequest("Email already exists");
+                }
+
+               
+
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+                var newUser = new User
+                {
+                    PasswordHash = passwordHash,
+                    Username = request.Username,
+                    Email = request.Email,
+                    Storename = request.Storename,
+                    Role = request.Role,
+                    Verified = false, // Set Verified to false initially
+                    VerificationToken = Guid.NewGuid().ToString(), // Generate verification token
+                    ResetPasswordToken = "No reset Request "
+
                 };
 
                 _apiContext.User.Add(newUser);

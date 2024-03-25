@@ -12,7 +12,7 @@ using easyShipBackend.Models;
 namespace easyShipBackend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240324063507_initial")]
+    [Migration("20240325044938_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -162,6 +162,10 @@ namespace easyShipBackend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Storename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");

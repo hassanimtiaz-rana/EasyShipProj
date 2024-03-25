@@ -80,6 +80,18 @@ namespace easyShipBackend.Controllers
             }
             return Ok();
         }
+        [HttpGet("ByStore/{storename}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByStore(string storename)
+        {
+            var productsByStore = await _apiContext.Productss.Where(p => p.Storename == storename).ToListAsync();
+            if (productsByStore == null || productsByStore.Count == 0)
+            {
+                return NotFound(); // or appropriate response if no data found
+            }
+
+            return productsByStore;
+        }
+
         [HttpPut("UpdateQuantity")]
         public async Task<IActionResult> UpdateQuantity([FromBody] ProductQuantityRequest request)
         {

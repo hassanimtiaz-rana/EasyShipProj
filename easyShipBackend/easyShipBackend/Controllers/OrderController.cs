@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using easyShipBackend.Models;
+using EllipticCurve.Utils;
 
 namespace easyShipBackend.Controllers
 {
@@ -49,24 +50,37 @@ namespace easyShipBackend.Controllers
             return CreatedAtAction(nameof(GetOrder), new { id = order.ID }, order);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutOrder(int id, Order order)
+        [HttpPut]
+        public async Task<ActionResult> PutOrder([FromBody] UpdateOrder updatedOrder)
         {
-            if (id != order.ID)
+            if (updatedOrder == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid data provided.");
             }
-            _apiContext.Entry(order).State = EntityState.Modified;
+
+            var existingOrder = await _apiContext.Orders.FindAsync(updatedOrder.ID);
+            if (existingOrder == null)
+            {
+                return NotFound("Order not found.");
+            }
+
+            // Update only the properties that need to be modified
+            existingOrder.OrderStatus = updatedOrder.OrderStatus;
+            existingOrder.PaymentStatus = updatedOrder.PaymentStatus;
+
             try
             {
+                _apiContext.Entry(existingOrder).State = EntityState.Modified;
                 await _apiContext.SaveChangesAsync();
+                return Ok("Order updated successfully.");
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw;
+                return StatusCode(500, "Failed to update order.");
             }
-            return Ok();
         }
+
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrder(int id)
@@ -81,6 +95,19 @@ namespace easyShipBackend.Controllers
             return Ok();
         }
 
+        [HttpGet("ByStore/{storename}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByStore(string storename)
+        {
+            var ordersByStore = await _apiContext.Orders.Where(o => o.Storename == storename).ToListAsync();
+            if (ordersByStore == null || ordersByStore.Count == 0)
+            {
+                return NotFound(); // or appropriate response if no data found
+            }
+
+            return ordersByStore;
+        }
+
         // Additional methods for order handling can be added as needed
+
     }
 }

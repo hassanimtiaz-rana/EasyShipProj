@@ -10,4 +10,10 @@
         public string OrderStatus { get; set; }
         public string PaymentStatus { get; set; }
     }
+    public class UpdateOrder
+    {
+        public int ID { get; set; }
+        public string OrderStatus { get; set; }
+        public string PaymentStatus { get; set; }
+    }
 }

@@ -20,6 +20,7 @@ function CrudInventory()
   // const decodedToken = JSON.parse(atob(token.split('.')[1]));
   const decodedToken = JSON.parse(atob(token.split('.')[1]));
   const email = decodedToken.Username; // Assuming 'sub' contains the username
+  const storename=decodedToken.Storename;
   console.log('Username in inventory is=>',email);
   // setUsername(usernameFromToken);
 
@@ -50,13 +51,13 @@ function CrudInventory()
    getData();
  }, []);
   const getData = () => {
- axios.get('https://localhost:7279/api/Product')
-   .then((result) => {
-     setData(result.data);
-   })
-   .catch((error) => {
-     console.log(error);
-   });
+    axios.get(`https://localhost:7279/api/Product/ByStore/${storename}`)
+    .then((result) => {
+        setData(result.data);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 };
 const handleSearchInputChange = (e) => {
   setSearchQuery(e.target.value);
@@ -70,7 +71,7 @@ const filteredData = data.filter((item) => {
 });
 const filteredInventoryData = data.filter((item) => {
   return (
-    (item.username === email) &&
+    
     (item.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.productCatagory.toLowerCase().includes(searchQuery.toLowerCase()))
   );
@@ -119,7 +120,8 @@ const handleEdit=(id)=>{
     "productPrice": editProductPrice,
     "productQuantity": editProductQuantity,
     "productCatagory": editProductCatagory,
-    "username":email
+    "username":email,
+    "storename":storename
   
 }
 axios.put(url,data)
@@ -147,7 +149,8 @@ axios.put(url,data)
         "productPrice": productPrice,
         "productQuantity": productQuantity,
         "productCatagory": productCatagory,
-        "username":email
+        "username":email,
+        "storename":storename
       
     }
     axios.post(url,data)

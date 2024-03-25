@@ -9,6 +9,7 @@
 
         public string? productCatagory { get; set; }
         public string? Username { get; set; }
+        public string Storename {  get; set; }
 
     }
     public class ProductQuantityRequest

@@ -29,6 +29,9 @@ import CourierRecommendation from './Courier Recommendation/CourierRecommendatio
 import Help from './Help/help.jsx';
 import UserManagement from './Team/team.jsx';
 import OrderPage from './Order/OrderPage.jsx';
+import MyOrder from './MyOrder/MyOrder.jsx';
+import OrderManagement from './MockApi/OrderManagement.jsx';
+
 
 // import UserRoute  from './ProtectedRoutes.jsx';
 
@@ -43,11 +46,15 @@ function App() {
         <Route path="/HomePage" element={<HomePage />}/>
         <Route path="/AdminDashboard" element={<AdminDashboard />}/>
         <Route path="/manageCouriers" element={<ManageCouriers />}/>
-        <Route path="/umg" element={<UserManagement />}/>
+        <Route path="/my-team" element={<UserManagement />}/>
         <Route path="/inventory" element={<CrudInventory />}/>
         <Route path="/help" element={<Help />}/>
-        <Route path="/mc" element={<ManageComplaints />}/>
-        <Route path="/opg" element={<OrderPage />}/>
+        <Route path="/manageComplaints" element={<ManageComplaints />}/>
+        <Route path="/Place-Order" element={<OrderPage />}/>
+        <Route path="/my-orders" element={<MyOrder />}/>
+        <Route path="/mock" element={<OrderManagement />}/>
+
+
 
 
 
@@ -59,8 +66,8 @@ function App() {
         {/* <Route path="/api/auth/reset-password"> */}
         <Route path="/api/auth/reset-password/:email/:resetToken" element={<ResetPasswordPage />}/>
         <Route path="/login" element={<SignIn />}/>
-        <Route path="/cr" element={<CourierRecommendation />}/>
-        <Route path="/opg" element={<CourierRecommendation />}/>
+        <Route path="/courier-recommendation" element={<CourierRecommendation />}/>
+        {/* <Route path="/opg" element={<CourierRecommendation />}/> */}
 
         
         <Route path="/manageUsers" element={<ManageUsers />}/>

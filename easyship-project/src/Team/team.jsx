@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Table } from 'react-bootstrap';
 import NavbarUser from './navbarUser';
-
-import { Table } from 'react-bootstrap';
 
 const UserManagement = () => {
     const [userData, setUserData] = useState([]);
@@ -18,8 +16,6 @@ const UserManagement = () => {
 
     const token = localStorage.getItem('token');
 
-    console.log('Token in inventory', token);
-    // const decodedToken = JSON.parse(atob(token.split('.')[1]));
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     const tokenstorename = decodedToken.Storename; // Assuming 'sub' contains the username
 
@@ -28,21 +24,21 @@ const UserManagement = () => {
     }, []);
 
     const getData = () => {
-        axios.get('https://localhost:7279/api/User')
+        axios.get(`https://localhost:7279/api/Auth/ByStore/${tokenstorename}`)
             .then((result) => {
                 setUserData(result.data);
             })
             .catch((error) => {
-                console.log("Error is=>", error);
+                console.log("Error fetching user data:", error);
             });
     };
-
+    
     const handleRegister = () => {
         if (!username || !password || !email || isLoading) {
             return;
         }
         setIsLoading(true);
-        const url = 'https://localhost:7279/api/Auth/register';
+        const url = 'https://localhost:7279/api/Auth/register-member';
         const data = {
             username: username,
             password: password,
@@ -117,14 +113,16 @@ const UserManagement = () => {
     return (
         <>
             <NavbarUser />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <h2>User Management</h2>
-                <button className="btn btn-primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => setShowModal(true)}>Add User</button> &nbsp;
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <div className="d-flex justify-content-between mb-3 mr-5">
+                <h2></h2>
+                <Button variant="primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => setShowModal(true)}>Add User</Button>
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -137,23 +135,21 @@ const UserManagement = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {userData
-                        .filter(item => item.storename === tokenstorename) // Filter based on storename
-                        .map((item, index) => (
-                            <tr key={index} style={{ backgroundColor: selectedUserId === item.id ? 'red' : 'transparent' }} onClick={() => handleRowClick(item.id)}>
-                                <td>{index + 1}</td>
-                                <td>{item.username}</td>
-                                <td>{item.email}</td>
-                                <td>{item.role}</td>
-                                {item.role !== 'superuser' && (
-                                    <td>
-                                        <button className="btn btn-danger" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c' }} onClick={() => handleDelete(item.id)}>Delete</button>
-                                        &nbsp;
-                                        <button className="btn btn-primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => handleEditModal(item.id, item.role)}>Edit</button>
-                                    </td>
-                                )}
-                            </tr>
-                        ))}
+                    {userData.map((item, index) => (
+                        <tr key={index} style={{ backgroundColor: selectedUserId === item.id ? 'red' : 'transparent' }} onClick={() => handleRowClick(item.id)}>
+                            <td>{index + 1}</td>
+                            <td>{item.username}</td>
+                            <td>{item.email}</td>
+                            <td>{item.role}</td>
+                            {item.role !== 'superuser' && (
+                                <td>
+                                    <Button variant="danger" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c' }} onClick={() => handleDelete(item.id)}>Delete</Button>
+                                    &nbsp;
+                                    <Button variant="primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => handleEditModal(item.id, item.role)}>Edit</Button>
+                                </td>
+                            )}
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
 
@@ -188,7 +184,6 @@ const UserManagement = () => {
                                     name="role"
                                     id="userRole"
                                     checked={role === 'user'}
-                                   
                                     onChange={() => setRole('user')}
                                 />
                                 <Form.Check
@@ -204,7 +199,7 @@ const UserManagement = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                    <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
                         Close
                     </button>
                     <button className="btn btn-primary" onClick={handleRegister} disabled={isLoading}>

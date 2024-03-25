@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
+import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import NavbarUser from "./navbarUser";
+import { Nav } from "react-bootstrap";
 
 function OrderPage() {
   const [products, setProducts] = useState([]);
@@ -11,6 +20,11 @@ function OrderPage() {
   const [fromCity, setFromCity] = useState("");
   const [toCity, setToCity] = useState("");
   const [shippingPrice, setShippingPrice] = useState(0);
+  const token = localStorage.getItem('token');
+
+    console.log('Token in inventory', token);
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const storename = decodedToken.Storename; // Assuming 'sub' contains the username
 
 
   useEffect(() => {
@@ -38,10 +52,11 @@ function OrderPage() {
   
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`https://localhost:7279/api/Product`);
+      const response = await axios.get(`https://localhost:7279/api/Product/ByStore/${storename}`);
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
+      return null;
     }
   };
 
@@ -105,7 +120,7 @@ function OrderPage() {
         Items: addedProducts.map((product) => product.productName).join(", "),
         Address: address,
         TotalCost: totalCost + shippingPrice,
-        Storename: "Your Store Name", // Replace with actual store name
+        Storename: storename, // Replace with actual store name
         OrderStatus: "Pending",
         PaymentStatus: "Pending",
         CreatedAt: new Date().toISOString(),
@@ -126,6 +141,13 @@ function OrderPage() {
 
   return (
     <>
+   
+    <NavbarUser/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
       <div className="container mx-auto mt-10">
         {/* Box for Adding Products */}
         <div className="flex justify-center items-center mb-5">
@@ -174,11 +196,11 @@ function OrderPage() {
                   <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">{product.productCode}</p>
                   <div className="flex items-center justify-between w-full">
                     <p className="text-base font-black leading-none text-gray-800">{product.productName}</p>
-                    <p className="py-2 px-3 border border-gray-200 rounded-md">{product.quantity}</p>
+                    <p className="py-2 px-3 border border-gray-200 rounded-md">{quantity}</p>
                   </div>
-                  <p className="text-xs leading-3 text-gray-600 pt-2">Height: {product.height}</p>
-                  <p className="text-xs leading-3 text-gray-600 py-4">Color: {product.color}</p>
-                  <p className="w-96 text-xs leading-3 text-gray-600">Composition: {product.composition}</p>
+                  <p className="text-xs leading-3 text-gray-600 pt-2">Product Catagory: {product.productCatagory}</p>
+                  <p className="text-xs leading-3 text-gray-600 py-4">Per Piece Price: {product.productPrice}</p>
+                  {/* <p className="w-96 text-xs leading-3 text-gray-600">Composition: {product.composition}</p> */}
                   <div className="flex items-center justify-end mt-auto">
                     {/* Remove button */}
                     <p className="text-xs leading-3 underline text-red-500 cursor-pointer" onClick={() => handleRemoveProduct(product.id)}>Remove</p>
@@ -193,7 +215,7 @@ function OrderPage() {
             <h1 className="font-semibold text-2xl  pb-8">Order Summary</h1>
             <div className="flex justify-between mt-10 mb-5">
               <span className="font-semibold text-sm uppercase">Items {addedProducts.length}</span>
-              <span className="font-semibold text-sm">${totalCost}</span>
+              <span className="font-semibold text-sm">Rs{totalCost}</span>
             </div>
              {/* Address Message Box */}
 <div className="mt-8">
@@ -243,7 +265,7 @@ function OrderPage() {
  <div>
   <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
   <select className="block p-2 text-gray-600 w-full text-sm">
-    <option>{`Shipping Price: $${shippingPrice}`}</option>
+    <option>{`Shipping Price: Rs${shippingPrice}`}</option>
   </select>
 </div>
 
@@ -252,7 +274,7 @@ function OrderPage() {
   <div className="border-t mt-8">
     <div className="flex font-semibold justify-between py-6 text-sm uppercase">
       <span>Total cost</span>
-      <span>{`$${totalCost + shippingPrice}`}</span>
+      <span>{`Rs${totalCost + shippingPrice}`}</span>
     </div>
               {/* Checkout Button */}
         <div className="flex justify-center mt-5">

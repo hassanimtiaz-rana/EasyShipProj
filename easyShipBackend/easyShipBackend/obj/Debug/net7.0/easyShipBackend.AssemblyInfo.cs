@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("easyShipBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67c9de4d95ec101eb82c3e9b0e82fab922153eea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1690d5218e7f4817abc95fd1e03dc98b3b2206e")]
 [assembly: System.Reflection.AssemblyProductAttribute("easyShipBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("easyShipBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
