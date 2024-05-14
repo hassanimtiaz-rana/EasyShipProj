@@ -53,8 +53,14 @@ function SignInPage() {
                 // navigate('/HomePage');
                 if (role === 'admin' ) {
                     navigate('/adminDashboard');
-                } else {
-                    navigate('/inventory', { state: { email } });
+                } else if(role === 'inventoryManager') {
+                    navigate('/inventory');
+                }
+                else if(role === 'orderManager') {
+                    navigate('/my-orders');
+                }
+                else{
+                    navigate('/userDashboard');
                 }
             })
             .catch((error) => {

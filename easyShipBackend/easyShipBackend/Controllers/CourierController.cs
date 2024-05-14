@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using easyShipBackend.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace easyShipBackend.Controllers
 {
@@ -12,6 +16,9 @@ namespace easyShipBackend.Controllers
     public class CourierController : ControllerBase
     {
         private readonly ApiContext _apiContext;
+
+
+
 
         public CourierController(ApiContext apiContext)
         {
@@ -51,7 +58,7 @@ namespace easyShipBackend.Controllers
             if (existingCourier != null)
             {
                 // Return a conflict response indicating that the same courier for the same destination and pickup city already exists
-                return Conflict("The same courier name for the same destination and pickup city already exists.");
+                return BadRequest("The same courier name for the same destination and pickup city already exists.");
             }
 
             _apiContext.CourierDetails.Add(courier);
@@ -59,7 +66,6 @@ namespace easyShipBackend.Controllers
             return CreatedAtAction(nameof(GetCourier), new { id = courier.Id }, courier);
         }
 
-        // Other methods (HttpPut, HttpDelete) remain unchanged
         [HttpPut("{id}")]
         public async Task<ActionResult> PutCourier(int id, CourierDetails courier)
         {
@@ -91,15 +97,69 @@ namespace easyShipBackend.Controllers
             await _apiContext.SaveChangesAsync();
             return Ok();
         }
+
         [HttpGet("CalculateShipping")]
-        public async Task<ActionResult<float>> CalculateShippingCharges(string fromCity, string toCity)
+        public async Task<ActionResult<IEnumerable<CourierDetails>>> CalculateShippingCharges(string fromCity, string toCity)
         {
-            var courier = await _apiContext.CourierDetails.FirstOrDefaultAsync(c => c.PickupCity == fromCity && c.DestinationCity == toCity);
-            if (courier == null)
+            var couriers = await _apiContext.CourierDetails
+                .Where(c => c.PickupCity == fromCity && c.DestinationCity == toCity)
+                .ToListAsync();
+
+            if (couriers.Count == 0)
             {
-                return NotFound("No courier available for the specified cities.");
+                return NotFound("No couriers available for the specified cities.");
             }
-            return Ok(courier.ShippingCharges);
+
+            return Ok(couriers);
         }
+
+        [HttpGet("GetAllCountries")]
+        public async Task<ActionResult<IEnumerable<CountryResponse>>> GetAllCountries()
+        {
+            var apiKey = "e8436621-cbbc-4088-b10d-177ec2cfefca"; // Your API Key
+            var apiUrl = "https://api.tcscourier.com/production/v1/cod/countries";
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Add("X-IBM-Client-Id", apiKey);
+
+                try
+                {
+                    var response = await httpClient.GetAsync(apiUrl);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        var apiCountriesResponse = JsonConvert.DeserializeObject<ApiCountriesResponse>(content);
+
+                        if (apiCountriesResponse != null && apiCountriesResponse.AllCountries != null)
+                        {
+                            var countryResponses = apiCountriesResponse.AllCountries.Select(c =>
+                                new CountryResponse
+                                {
+                                    CountryId = c.CountryId.ToString(), // Assuming CountryId is a string in CountryResponse
+                                    CountryName = c.CountryName
+                                }).ToList();
+
+                            return Ok(countryResponses);
+                        }
+                        else
+                        {
+                            return BadRequest("Empty or invalid response received from the API.");
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest($"Failed to fetch countries. Status code: {response.StatusCode}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to fetch countries: {ex.Message}");
+                }
+            }
+        }
+
+
     }
+
 }

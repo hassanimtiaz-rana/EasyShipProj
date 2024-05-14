@@ -54,7 +54,7 @@ namespace easyShipBackend.Controllers
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
             smtpClient.Port = 587;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("hassanrana72b@gmail.com", "jtbt mimr xbzy peaq"); // Replace with your Gmail credentials
+            smtpClient.Credentials = new NetworkCredential("hassanrana72b@gmail.com", "jtbt mimr xbzy peaq"); 
             smtpClient.EnableSsl = true;
 
             try

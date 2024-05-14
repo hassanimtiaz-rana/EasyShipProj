@@ -13,6 +13,9 @@ using System.Text;
 using easyShipBackend.Models;
 using easyShipBackend.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Text.RegularExpressions;
 
 namespace easyShipBackend.Controllers
 {
@@ -56,6 +59,18 @@ namespace easyShipBackend.Controllers
         {
             try
             {
+                // Validate username format (alphanumeric characters only)
+                if (!Regex.IsMatch(request.Username, "^[a-zA-Z0-9]+$"))
+                {
+                    return BadRequest("Username must contain only letters and numbers (no special characters).");
+                }
+                // Validate email format
+                if (!Regex.IsMatch(request.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    return BadRequest("Invalid email format");
+                }
+
+
                 var existingUser = _apiContext.User.FirstOrDefault(u => u.Username == request.Username);
                 if (existingUser != null)
                 {
@@ -74,7 +89,7 @@ namespace easyShipBackend.Controllers
                 }
 
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
+                string formattedDate = DateTime.UtcNow.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
                 var newUser = new User
                 {
                     PasswordHash = passwordHash,
@@ -84,8 +99,8 @@ namespace easyShipBackend.Controllers
                     Role = request.Role,
                     Verified = false, // Set Verified to false initially
                     VerificationToken = Guid.NewGuid().ToString(), // Generate verification token
-                    ResetPasswordToken = "No reset Request "
-                   
+                    ResetPasswordToken = "No reset Request ",
+                    CreateAT = DateTime.ParseExact(formattedDate, "MM/dd/yyyy", CultureInfo.InvariantCulture)
                 };
 
                 _apiContext.User.Add(newUser);
@@ -102,11 +117,23 @@ namespace easyShipBackend.Controllers
                 return StatusCode(500, "Error occurred while registering the user");
             }
         }
+
         [HttpPost("register-member")]
         public ActionResult<User> RegisterMember(UserDto request)
         {
             try
             {
+                // Validate username format (alphanumeric characters only)
+                if (!Regex.IsMatch(request.Username, "^[a-zA-Z0-9]+$"))
+                {
+                    return BadRequest("Username must contain only letters and numbers (no special characters).");
+                }
+                // Validate email format
+                if (!Regex.IsMatch(request.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    return BadRequest("Invalid email format");
+                }
+
                 var existingUser = _apiContext.User.FirstOrDefault(u => u.Username == request.Username);
                 if (existingUser != null)
                 {
@@ -118,9 +145,11 @@ namespace easyShipBackend.Controllers
                     return BadRequest("Email already exists");
                 }
 
-               
+
 
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                string formattedDate = DateTime.UtcNow.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+
 
                 var newUser = new User
                 {
@@ -131,9 +160,10 @@ namespace easyShipBackend.Controllers
                     Role = request.Role,
                     Verified = false, // Set Verified to false initially
                     VerificationToken = Guid.NewGuid().ToString(), // Generate verification token
-                    ResetPasswordToken = "No reset Request "
+                    ResetPasswordToken = "No reset Request ",
+                    CreateAT = DateTime.ParseExact(formattedDate, "MM/dd/yyyy", CultureInfo.InvariantCulture)
 
-                };
+            };
 
                 _apiContext.User.Add(newUser);
                 _apiContext.SaveChanges();

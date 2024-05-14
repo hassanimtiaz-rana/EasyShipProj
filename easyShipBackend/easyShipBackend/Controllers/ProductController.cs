@@ -58,10 +58,22 @@ namespace easyShipBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product prod)
         {
+           
+
+            // Check if a product with the same name and store name already exists
+            var existingProduct = _apiContext.Productss.FirstOrDefault(p => p.productName == prod.productName && p.Storename == prod.Storename);
+
+            if (existingProduct != null)
+            {
+                return BadRequest("Product with the same name and store name already exists.");
+            }
+
             _apiContext.Productss.Add(prod);
             await _apiContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetProduct), new { id = prod.Id }, prod);
         }
+
+
         [HttpPut("{id}")]
         public async Task<ActionResult> PutProduct(int id, Product product)
         {

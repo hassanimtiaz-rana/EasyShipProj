@@ -43,48 +43,103 @@ function NavbarUser() {
           <div className="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
             {/* Use Tailwind responsive classes to show/hide based on screen size */}
             <ul className="hidden lg:flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-            <li>
-                <a href="/my-team" className="nav-link">My Team</a>
-              </li>
-              <li>
-                <a href="/inventory" className="nav-link">Inventory</a>
-              </li>
-              <li className="relative" ref={dropdownRef}>
-                <span className="nav-link cursor-pointer" onClick={handleOrderMenu}>
-                  Order
-                  <svg
-                    className="h-5 w-5 inline-block ml-1 -mt-1.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10.293 14.293a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L10 11.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-                {showOrderMenu && (
-                  <ul className="absolute z-10 bg-white border border-gray-200 rounded-md mt-1 py-2 w-40">
-                    <li>
-                      <Link to="/my-orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</Link>
-                    </li>
-                    <li>
-                      <Link to="/Place-Order" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Place Order</Link>
-                    </li>
-                  </ul>
-                )}
-              </li>
-              <li>
-                <a href="/courier-recommendation" className="nav-link">Courier Recommendation</a>
-              </li>
-              <li>
-                <a href="#" className="nav-link">Reports</a>
-              </li>
-              <li>
-                <a href="/help" className="nav-link">Help</a>
-              </li>
+              {role==='superuser'&& (
+                <>
+                 <li>
+                    <a href="/my-team" className="nav-link">My Team</a>
+                  </li>
+                  <li>
+                    <a href="/inventory" className="nav-link">Inventory</a>
+                  </li>
+                  <li className="relative" ref={dropdownRef}>
+                    <span className="nav-link cursor-pointer" onClick={handleOrderMenu}>
+                      Order
+                      <svg
+                        className="h-5 w-5 inline-block ml-1 -mt-1.5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10.293 14.293a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L10 11.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    {showOrderMenu && (
+                      <ul className="absolute z-10 bg-white border border-gray-200 rounded-md mt-1 py-2 w-40">
+                        <li>
+                          <Link to="/my-orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</Link>
+                        </li>
+                        <li>
+                          <Link to="/Place-Order" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Place Order</Link>
+                        </li>
+                      </ul>
+                    )}
+
+                  </li>
+                  <li>
+                    <a href="/courier-recommendation" className="nav-link">Courier Recommendation</a>
+                  </li>
+                  <li>
+                    <a href="#" className="nav-link">Reports</a>
+                  </li>
+                  <li>
+                    <a href="/help" className="nav-link">Help</a>
+                  </li>
+                
+                </>
+              )}
+              {role === 'orderManager' && (
+                <>
+                  
+                  <li className="relative" ref={dropdownRef}>
+                    <span className="nav-link cursor-pointer" onClick={handleOrderMenu}>
+                      Order
+                      <svg
+                        className="h-5 w-5 inline-block ml-1 -mt-1.5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10.293 14.293a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L10 11.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    {showOrderMenu && (
+                      <ul className="absolute z-10 bg-white border border-gray-200 rounded-md mt-1 py-2 w-40">
+                        <li>
+                          <Link to="/my-orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</Link>
+                        </li>
+                        <li>
+                          <Link to="/Place-Order" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Place Order</Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+                  <li>
+                    <a href="/courier-recommendation" className="nav-link">Courier Recommendation</a>
+                  </li>
+                  <li>
+                    <a href="/help" className="nav-link">Help</a>
+                  </li>
+                </>
+              )}
+              {role === 'inventoryManager' && (
+                <>
+                  <li>
+                    <a href="/inventory" className="nav-link">Inventory</a>
+                  </li>
+                 
+                  <li>
+                    <a href="/help" className="nav-link">Help</a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

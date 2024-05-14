@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import NavbarUser from "./navbarUser";
+import NavbarUser from "../Navbars/navbarUser";
 import Faq from "./faq";
 
 function Help() {

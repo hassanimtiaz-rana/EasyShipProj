@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
-import NavbarUser from './navbarUser';
+import NavbarUser from '../Navbars/navbarUser';
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
 const UserManagement = () => {
     const [userData, setUserData] = useState([]);
@@ -11,8 +13,8 @@ const UserManagement = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [role, setRole] = useState('user'); // Default role set to 'user'
-    const [editUserId, setEditUserId] = useState(null); // Track user ID for editing
+    const [role, setRole] = useState('user');
+    const [editUserId, setEditUserId] = useState(null);
 
     const token = localStorage.getItem('token');
 
@@ -32,7 +34,7 @@ const UserManagement = () => {
                 console.log("Error fetching user data:", error);
             });
     };
-    
+
     const handleRegister = () => {
         if (!username || !password || !email || isLoading) {
             return;
@@ -61,13 +63,22 @@ const UserManagement = () => {
                 setEmail('');
                 setPassword('');
                 setRole('user');
+                toast.success('User registered successfully'); // Display success toast
             })
             .catch((error) => {
                 setIsLoading(false);
                 if (error.response && error.response.status === 400 && error.response.data === 'Username already exists') {
-                    // Handle specific error messages
-                } else {
-                    // Handle general error
+                    toast.error('Username already exists');
+                } else if (error.response && error.response.status === 400 && error.response.data === 'Email already exists') {
+                    toast.error('Email already exists');
+                } else if (error.response && error.response.status === 400 && error.response.data === 'Username must contain only letters and numbers (no special characters).') {
+                    toast.error('Username must contain only letters and numbers (no special characters).');
+                }
+                else if (error.response && error.response.status === 400 && error.response.data === 'Invalid email format') {
+                    toast.error('Invalid Email Entered');
+                }
+                else {
+                    toast.error('Error registering user');
                 }
             });
     };
@@ -112,6 +123,7 @@ const UserManagement = () => {
 
     return (
         <>
+        <ToastContainer/>
             <NavbarUser />
             <br/>
             <br/>
@@ -145,7 +157,7 @@ const UserManagement = () => {
                                 <td>
                                     <Button variant="danger" style={{ backgroundColor: '#ea580c', borderColor: '#ea580c' }} onClick={() => handleDelete(item.id)}>Delete</Button>
                                     &nbsp;
-                                    <Button variant="primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => handleEditModal(item.id, item.role)}>Edit</Button>
+                                    {/* <Button variant="primary" style={{ backgroundColor: '#1f2937', borderColor: '#1f2937' }} onClick={() => handleEditModal(item.id, item.role)}>Edit</Button> */}
                                 </td>
                             )}
                         </tr>
@@ -155,7 +167,7 @@ const UserManagement = () => {
 
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{editUserId ? 'Edit User' : 'Add User'}</Modal.Title>
+                    <Modal.Title>{ 'Add User'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -180,19 +192,19 @@ const UserManagement = () => {
                             <div>
                                 <Form.Check
                                     type="radio"
-                                    label="User"
+                                    label="Inventory Manager"
                                     name="role"
-                                    id="userRole"
-                                    checked={role === 'user'}
-                                    onChange={() => setRole('user')}
+                                    id="inventoryManager"
+                                    checked={role === 'inventoryManager'}
+                                    onChange={() => setRole('inventoryManager')}
                                 />
                                 <Form.Check
                                     type="radio"
-                                    label="Superuser"
+                                    label="Order Manager"
                                     name="role"
-                                    id="superuserRole"
-                                    checked={role === 'superuser'}
-                                    onChange={() => setRole('superuser')}
+                                    id="orderManager"
+                                    checked={role === 'orderManager'}
+                                    onChange={() => setRole('orderManager')}
                                 />
                             </div>
                         </Form.Group>

@@ -128,6 +128,10 @@ namespace easyShipBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Courier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Items")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -143,6 +147,9 @@ namespace easyShipBackend.Migrations
                     b.Property<string>("Storename")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("TotalCost")
                         .HasColumnType("int");
@@ -191,6 +198,9 @@ namespace easyShipBackend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreateAT")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()

@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 
-function Protected(props) {
+function ProtectedSuperUser(props) {
     const { component: Component } = props;
 
     // Check if the user is logged in
@@ -17,7 +17,7 @@ function Protected(props) {
     // const decodedToken = jwt_decode(token);
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     // Extract the user role from the decoded token
-    const userRole = decodedToken.Role; // Assuming 'role' is stored in the JWT payload
+    const userRole = decodedToken.Role; //  'role' is stored in the JWT payload
     
     // If the user role is not 'user', redirect to the login page
     if (userRole !== 'superuser') {
@@ -32,4 +32,4 @@ function Protected(props) {
     );
 }
 
-export default Protected;
+export default ProtectedSuperUser;

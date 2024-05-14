@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import NavbarUser from './navbarUser';
+import NavbarUser from "../Navbars/navbarUser";
 //  import * as jwt_decode from 'jwt-decode';
  import { useLocation } from 'react-router-dom';
 function CrudInventory()
@@ -26,7 +26,7 @@ function CrudInventory()
 
     const [show, setShow] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-  const categories = ["Gaming", "Home Appliances", "TV"];
+  const categories = ["Gaming", "Home Appliances", "TV","Other"];
 
   // Manage selected category
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -78,6 +78,7 @@ const filteredInventoryData = data.filter((item) => {
 });
 
 const handleEdit=(id)=>{
+ 
     //alert(id);
     handleShow();
     axios.get(`https://localhost:7279/api/Product/${id}`)
@@ -107,12 +108,18 @@ const handleEdit=(id)=>{
           
         })
         .catch((error) => {
+          
           toast.error(error);
         });
     }
   };
   
   const handleUpdate=()=>{
+    if (editProductQuantity < 0 || editProductPrice < 0) {
+      toast.error('Quantity and price cannot be less than 0.');
+      return;
+    }
+    
   const url= ` https://localhost:7279/api/Product/${editId}`
   const data={
     "id": editId,
@@ -141,6 +148,15 @@ axios.put(url,data)
    
   }
   const handleSave=()=>{
+    if (productQuantity < 0 || productPrice < 0) {
+      toast.error('Quantity and price cannot be less than 0.');
+      return;
+    }
+    if (productCatagory === '' || productCatagory === 'Select Category') {
+      toast.error('Please select a valid category.');
+      return;
+    }
+  
     const url='https://localhost:7279/api/Product';
     const data={
       
@@ -161,10 +177,17 @@ axios.put(url,data)
 
 
     })
-    .catch((error)=>{
-     toast.error(error);
+    .catch((error)=>{  if (error.response && error.response.status === 400 && error.response.data === 'Product with the same name and store name already exists.') {
+      toast.error('Similar Product exists in Store');
+  } 
+    else {
+      toast.error('Product cannot be added');
+   
+  }
+     
 
     });
+  
     
     const clear=()=>{
       setProductName('');
@@ -235,6 +258,7 @@ return(
     <Fragment>
     <Container>
       <NavbarUser/>
+      
       <br></br>
       <br></br>
       <br></br>
@@ -242,6 +266,7 @@ return(
       <br></br>
             {email && <p>Username: {email}</p>}
       <Row>
+      
     <Col>
       <input
         type="text"
@@ -256,11 +281,11 @@ return(
       <Row>
         
         <Col>
-        <input type="text" className="form-control" placeholder="Enter Product Name"  maxLength={15} value={productName} 
+        <input type="text" className="form-control" placeholder="Enter Product Name"  maxLength={25} value={productName} 
         onChange={(e)=>setProductName(e.target.value) }
         />
         </Col>
-        <Col><input type="number" className="form-control" placeholder="Enter Quantity"maxLength={10} value={productQuantity}
+        <Col><input type="number" className="form-control" placeholder="Enter Quantity"maxLength={10}  value={productQuantity}
         onChange={(e)=>setProductQuantity(e.target.value)}
         /></Col>
          <Col><input type="number" className="form-control" placeholder="Enter Price Unit" maxLength={10} value={productPrice}
@@ -316,8 +341,9 @@ return(
                     <td>{index+1}</td>
                     <td>{item.id}</td>
                     <td>{item.productName}</td>
-                    <td>{item.productPrice}</td>
-                    <td className={item.productQuantity === 0 ? 'bg-danger' : ''}>{item.productQuantity}</td>                    
+                    <td>Rs:{item.productPrice}</td>
+                    {item.productQuantity === 0 ?<td className="text-danger">Low stock</td> :<td>{item.productQuantity}</td>}
+                   
                     <td>{item.productCatagory}</td>
                     <td colSpan={2}>
                       <button className="btn btn-primary" style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }} onClick={()=>handleEdit(item.id)}>Edit</button> &nbsp;
@@ -352,6 +378,7 @@ return(
                   className="form-control"
                   placeholder="Enter Product Name"
                   value={editProductName}
+                  maxLength={15}
                   onChange={(e) => setEditProductName(e.target.value)}
                 />
               </Col>
@@ -365,6 +392,7 @@ return(
                   className="form-control"
                   placeholder="Enter Product Quantity"
                   value={editProductQuantity}
+                  maxLength={10}
                   onChange={(e) => setEditProductQuantity(e.target.value)}
                 />
               </Col>
@@ -378,6 +406,7 @@ return(
                   className="form-control"
                   placeholder="Enter Product Price"
                   value={editProductPrice}
+                  maxLength={10}
                   onChange={(e) => setEditProductPrice(e.target.value)}
                 />
               </Col>

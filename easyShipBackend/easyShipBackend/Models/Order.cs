@@ -9,6 +9,10 @@
         public string Storename { get; set; }
         public string OrderStatus { get; set; }
         public string PaymentStatus { get; set; }
+        public string Courier { get; set; }
+
+        public DateTime Time { get; set; }
+
     }
     public class UpdateOrder
     {

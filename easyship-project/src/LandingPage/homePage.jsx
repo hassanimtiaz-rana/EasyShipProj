@@ -16,7 +16,7 @@ return(
       <Hero />
       <Features />
       <Couriers />
-      <Pricing />
+      {/* <Pricing /> */}
       <AboutUs/>
       <Footer /> 
       </div>

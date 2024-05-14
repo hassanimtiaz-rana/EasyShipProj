@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import NavbarUser from "./navbarUser";
+import NavbarUser from "../Navbars/navbarUser";
 
 function MyOrder() {
     const [show, setShow] = useState(false);
@@ -147,6 +147,8 @@ function MyOrder() {
                             <th>Total Cost</th>
                             <th>Order Status</th>
                             <th>Payment Status</th>
+                            <th>Courier</th>
+
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -158,8 +160,12 @@ function MyOrder() {
                                 <td>{item.totalCost}</td>
                                 <td>{item.orderStatus}</td>
                                 <td>{item.paymentStatus}</td>
+                                <td>{item.courier}</td>
+
+                                
+            
                                 <td colSpan={2}>
-                                    <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>View</button>
+                                    <button className="btn btn-primary" style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }} onClick={() => handleEdit(item.id)}>View</button>
                                 </td>
                             </tr>
                         ))}

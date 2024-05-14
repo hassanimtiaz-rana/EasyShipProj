@@ -18,6 +18,15 @@ namespace easyShipBackend.Models
         public string VerificationToken { get; set; } // Nullable string
         public string ResetPasswordToken { get; set; } // Nullable string
         public DateTime? ResetPasswordTokenExpiration { get; set; }
+        public DateTime? CreateAT { get; set; }
+
+
+
+    }
+    public class UpdateRole
+    {
+        public int Id { get; set; }
+        public string Role { get; set; }
 
 
 

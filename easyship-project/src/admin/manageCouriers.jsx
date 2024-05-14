@@ -67,6 +67,10 @@ function ManageCouriers() {
   });
 
   const handleEdit=(id)=>{
+    if (editShippingCharges < 0 || editDeliveryTimeline < 0) {
+      toast.error('Shipping charges and delivery timeline cannot be less than 0');
+      return;
+    }
     //alert(id);
     handleShow();
     axios.get(`https://localhost:7279/api/Courier/${id}`)
@@ -101,6 +105,12 @@ function ManageCouriers() {
         });
     }
   };
+  const handleInputChange = (e, setterFunc, maxLength) => {
+    const value = e.target.value.trim(); // Remove leading and trailing spaces
+    if (value.length <= maxLength) {
+        setterFunc(value);
+    }
+};
 
   const handleUpdate=()=>{
     const url= ` https://localhost:7279/api/Courier/${editId}`
@@ -130,6 +140,10 @@ function ManageCouriers() {
      
     }
   const handleSave=()=>{
+    if (shippingCharges < 0 || deliveryTimeline < 0) {
+      toast.error('Shipping charges and delivery timeline cannot be less than 0');
+      return;
+    }
     const url='https://localhost:7279/api/Courier';
     const data={
       
@@ -150,6 +164,12 @@ function ManageCouriers() {
 
     })
     .catch((error)=>{
+      if (error.response && error.response.status === 400 && error.response.data === 'The same courier name for the same destination and pickup city already exists.') {
+        toast.error('Courier With Same Location exists');
+    } 
+     else {
+        toast.error('Error registering Courier');
+    }
      toast.error(error);
 
     });
@@ -218,17 +238,18 @@ function ManageCouriers() {
           <Row>
         <Col>
         <input type="text" className="form-control" placeholder="Courier Name"  maxLength={15} value={courier} 
-        onChange={(e)=>setCourier(e.target.value) }
+        onChange={(e) => handleInputChange(e, setCourier, 15)}
+       
         />
         </Col>
         <Col>
-        <input type="text" className="form-control" placeholder="Shipping Charges"  maxLength={15} value={shippingCharges} 
+        <input type="Number" className="form-control" placeholder="Shipping Charges"  maxLength={15} value={shippingCharges} 
         onChange={(e)=>setShippingCharges(e.target.value) }
   
         />
         </Col>
         <Col>
-        <input type="text" className="form-control" placeholder="Delivery Timeline"  maxLength={15} value={deliveryTimeline} 
+        <input type="Number" className="form-control" placeholder="Delivery Timeline"  maxLength={15} value={deliveryTimeline} 
         onChange={(e)=>setDeliveryTimeline(e.target.value) }
   
         />
@@ -286,8 +307,8 @@ function ManageCouriers() {
                   <td>{index + 1}</td>
                   <td>{item.id}</td>
                   <td>{item.courier}</td>
-                  <td>{item.shippingCharges}</td>
-                  <td>{item.deliveryTimeline}</td>
+                  <td>Rs:{item.shippingCharges}</td>
+                  <td>{item.deliveryTimeline} days</td>
                   <td>{item.pickupCity}</td>
                   <td>{item.destinationCity}</td>
                   <td colSpan={2}>
@@ -339,7 +360,7 @@ function ManageCouriers() {
                     id="editCourierTimeline"
                     className="form-control"
                     placeholder="Courier Timeline"
-                    value={editCourierEmail}
+                    value={editDeliveryTimeline}
                     onChange={(e) => setEditDeliveryTimeline(e.target.value)}
                   />
                 </Col>

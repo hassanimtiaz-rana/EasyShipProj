@@ -159,7 +159,7 @@ function ManageComplaints() {
                                 <td>{format(new Date(item.time), 'MM/dd/yyyy HH:mm:ss')}</td>
 
                                 <td colSpan={2}>
-                                    <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>View</button>
+                                    <button className="btn btn-primary"style={{ backgroundColor: '#1f2937',borderColor: '#1f2937' }} onClick={() => handleEdit(item.id)}>View</button>
                                     &nbsp;
                                     {item.status !== 'Fixed' &&
                                         <button className="btn btn-success" onClick={() => handleStatusUpdate(item.id, 'Fixed')}>Fixed</button>
